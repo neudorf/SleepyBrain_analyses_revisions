@@ -4,8 +4,8 @@ Analysis code for: "Opposite effects of acute sleep restriction on the dynamic a
 ### Python:
 #### Local Bash
 ```bash
-git clone https://github.com/McIntosh-Lab/SleepyBrain_FAIR.git
-cd SleepyBrain_FAIR
+git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
+cd SleepyBrain_analyses
 conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
 conda activate neudorf_venv
 pip install nctpy
@@ -21,8 +21,8 @@ python -m pip install .
 
 #### HPC (Alliance Canada) Bash
 ```bash
-git clone https://github.com/McIntosh-Lab/SleepyBrain_FAIR-CAN.git
-cd SleepyBrain_FAIR
+git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
+cd SleepyBrain_analyses
 module load StdEnv/2020 matlab/2022b.2 python/3.10
 python3.10 -m venv neudorf_venv
 source neudorf_venv/bin/activate
