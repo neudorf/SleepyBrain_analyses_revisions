@@ -1,5 +1,5 @@
 %% Prep
-project_dir = '/PATH/TO/DIR/';
+project_dir = '/PATH/TO/DIR/'; % edit
 subject_files_dir = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/matlab/'];
 outputs_dir = [project_dir 'outputs/modularity/'];
 mkdir(outputs_dir);
