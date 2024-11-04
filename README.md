@@ -72,16 +72,21 @@ echo "addpath(genpath('${PWD}/python_packages/PLS_wrapper'))" >> ~/matlab/startu
 ### For code review:
 #### Reviewer 1
 Fig. 7 A: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_FC_degree_usc_ggplot.png`
+
 Fig. 7 B: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_FC_degree_cortex.png` and `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_FC_degree_subcortex.png`
+
 Fig. 7 C: `outputs/PLS/mean_centred_PLS/SA_axis_schaefer200x17_ggseg.png`
 
 #### Reviewer 2
 Fig. 11 A: `outputs/PLS/mean_centred_PLS_lv1_usc_table_leida_FO_ggplot.png`
+
 Fig. 11 B: based on values in `outputs/PLS/mean_centred_PLS_lv1_bsr_2.0thresh_leida_FO.csv`
+
 Fig. 11 C: `leida_FO_global_ggplot.png`
 
 #### Reviewer 3
 Figure 12: `outputs/modularity/Q.pdf`
+
 Table 1: compare results from `summary(lm)` in `modularity_analyses.r`
 
 ### Order to run code:
