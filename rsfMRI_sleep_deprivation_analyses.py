@@ -22,6 +22,8 @@ import os
 from neuromaps import transforms
 from nilearn import plotting, datasets
 
+RSCRIPT = '/usr/bin/Rscript'
+
 ATLAS = '220'
 
 DATA_PROCESSING_DIR = Path('data/data_processing/')
@@ -498,7 +500,7 @@ print('PLS interhemi',bsr_xh_n,bsr_xh_n/bsr_total_n * 100,'%')
 
 #%% matlab FC degree BSR inspection
 FC_degree_bsr = np.genfromtxt(PLS_FC_DEGREE_BSR_FILE)
-visualization.vis_cortex(FC_degree_bsr,PLS_FC_DEGREE_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220')
+visualization.vis_cortex(FC_degree_bsr,PLS_FC_DEGREE_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220',rscript=RSCRIPT)
 visualization.vis_subcortical(FC_degree_bsr,PLS_FC_DEGREE_BSR_SUBCORTEX_FIG_FILE,2.0,atlas_name='ST220')
 
 #%%
@@ -508,7 +510,7 @@ sa_axis_data -= int(np.mean(sa_axis_data))
 sa_axis_data_padded = np.zeros_like(FC_degree_bsr_nothresh)
 sa_axis_data_padded[:100] = sa_axis_data[:100]
 sa_axis_data_padded[110:210] = sa_axis_data[100:]
-visualization.vis_cortex(sa_axis_data_padded,SA_AXIS_FIG_FILE,0.0,atlas_name='ST220')
+visualization.vis_cortex(sa_axis_data_padded,SA_AXIS_FIG_FILE,0.0,atlas_name='ST220',rscript=RSCRIPT)
 
 #%%
 FC_degree_bsr_cortex = np.zeros_like(sa_axis_data)
@@ -553,21 +555,21 @@ young_FC_degree_sleep_diff_mean_sig = np.zeros_like(young_FC_degree_sleep_diff_m
 young_FC_degree_sleep_diff_mean_sig[FC_degree_bsr_sig_idx] = young_FC_degree_sleep_diff_mean[FC_degree_bsr_sig_idx]
 old_FC_degree_sleep_diff_mean_sig = np.zeros_like(old_FC_degree_sleep_diff_mean)
 old_FC_degree_sleep_diff_mean_sig[FC_degree_bsr_sig_idx] = old_FC_degree_sleep_diff_mean[FC_degree_bsr_sig_idx]
-visualization.vis_cortex(young_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_YOUNG_SLEEP_DIFF_SIG_BSR_CORTEX_FIG_FILE,0.001,atlas_name='ST220')
+visualization.vis_cortex(young_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_YOUNG_SLEEP_DIFF_SIG_BSR_CORTEX_FIG_FILE,0.001,atlas_name='ST220',rscript=RSCRIPT)
 visualization.vis_subcortical(young_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_YOUNG_SLEEP_DIFF_SIG_BSR_SUBCORTEX_FIG_FILE,0.001,atlas_name='ST220')
-visualization.vis_cortex(old_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_OLD_SLEEP_DIFF_SIG_BSR_CORTEX_FIG_FILE,0.001,atlas_name='ST220')
+visualization.vis_cortex(old_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_OLD_SLEEP_DIFF_SIG_BSR_CORTEX_FIG_FILE,0.001,atlas_name='ST220',rscript=RSCRIPT)
 visualization.vis_subcortical(old_FC_degree_sleep_diff_mean_sig,PLS_FC_DEGREE_OLD_SLEEP_DIFF_SIG_BSR_SUBCORTEX_FIG_FILE,0.001,atlas_name='ST220')
 
 print(np.where(young_FC_degree_sleep_diff_mean_sig < 0))
 
 #%% FC degree PLS old deprived vs normal sleep
 FC_degree_deprived_sleep_bsr = np.genfromtxt(PLS_FC_DEGREE_OLD_DEPRIVED_VS_NORMAL_SLEEP_BSR_FILE)
-visualization.vis_cortex(FC_degree_deprived_sleep_bsr,PLS_FC_DEGREE_OLD_DEPRIVED_VS_NORMAL_SLEEP_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220')
+visualization.vis_cortex(FC_degree_deprived_sleep_bsr,PLS_FC_DEGREE_OLD_DEPRIVED_VS_NORMAL_SLEEP_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220',rscript=RSCRIPT)
 visualization.vis_subcortical(FC_degree_deprived_sleep_bsr,PLS_FC_DEGREE_OLD_DEPRIVED_VS_NORMAL_SLEEP_BSR_SUBCORTEX_FIG_FILE,2.0,atlas_name='ST220')
 
 #%% matlab FC degree BSR inspection sex
 FC_degree_bsr = np.genfromtxt(PLS_FC_DEGREE_SEX_BSR_FILE) * -1 #flipping sign to be consistent with other analyses (Brain Score plot flipped in matlab)
-visualization.vis_cortex(FC_degree_bsr,PLS_FC_DEGREE_SEX_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220')
+visualization.vis_cortex(FC_degree_bsr,PLS_FC_DEGREE_SEX_BSR_CORTEX_FIG_FILE,2.0,atlas_name='ST220',rscript=RSCRIPT)
 visualization.vis_subcortical(FC_degree_bsr,PLS_FC_DEGREE_SEX_BSR_SUBCORTEX_FIG_FILE,2.0,atlas_name='ST220')
 
 #%% LEiDA Analysis
@@ -605,7 +607,8 @@ for state in range(K):
                                     thresh=0.0,
                                     pos_colour=K5_colours_hex[state],
                                     bg_colour='transparent',
-                                    atlas_name='ST220'
+                                    atlas_name='ST220',
+                                    rscript=RSCRIPT
                                     )
     visualization.vis_subcortical(cluster_centroid_roi_values_pos_bin[state],
                                     LEiDA_centroids_dir.joinpath(f'{state+1}_of_{K}_cluster_centroid_roi_values_pos_bin_subcortex.png'),
