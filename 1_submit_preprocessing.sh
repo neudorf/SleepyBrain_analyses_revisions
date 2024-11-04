@@ -8,6 +8,7 @@
 module load StdEnv/2020 r/4.3.1 matlab/2022b.2
 source neudorf_venv/bin/activate
 export R_LIBS=~/.local/R/$EBVERSIONR/
+cd data/data_processing
 echo "Starting import_SleepyBrain_data.py"
 python -u import_SleepyBrain_data.py
 echo "done"
