@@ -10,6 +10,7 @@ conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nile
 conda activate neudorf_venv
 pip install nctpy
 python -m pip install matlabengine=9.13.11 #matlab 2022b.2
+cd python_packages
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
 python pip -m install .
