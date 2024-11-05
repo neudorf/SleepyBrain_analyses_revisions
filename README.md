@@ -13,7 +13,7 @@ python -m pip install matlabengine=9.13.11 #matlab 2022b.2
 cd python_packages
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
-python pip -m install .
+python -m pip install .
 cd ../brainvistools
 python -m pip install .
 cd ../PyNeudorf
@@ -35,7 +35,7 @@ python -m pip install matlabengine==9.13.11
 cd python_packages
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
-python pip -m install .
+python -m pip install .
 cd ../brainvistools
 python -m pip install .
 cd ../PyNeudorf
