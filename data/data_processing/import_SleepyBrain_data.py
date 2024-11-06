@@ -13,7 +13,7 @@ ATLAS = '220'
 TR = 2.5
 BEHAV_FILE = Path('../participants.tsv')
 
-GOOD_SUBJECTS_FILE = Path('../data/good_subjects.txt')
+GOOD_SUBJECTS_FILE = Path('../good_subjects.txt')
 
 BEHAV_OUTPUT_DIR = Path('behav')
 BEHAV_OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
