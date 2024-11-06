@@ -25,7 +25,7 @@ YA_MALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_YA_male.txt')
 OA_FEMALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_OA_female.txt')
 OA_MALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_OA_male.txt')
 
-FC_DATA_DIR = Path('../SleepyBrain_ref_image_fix/connectivity_220')
+FC_DATA_DIR = Path('../connectivity_220')
 FC_OUTPUT_DIR = Path(f'FC/TVBSchaeferTian{ATLAS}')
 FC_OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
 FC_OUTPUT_MATLAB_DIR = FC_OUTPUT_DIR.joinpath('matlab')
@@ -41,7 +41,7 @@ FMRI_TIMESERIES_FILTERED_NORMAL_SLEEP_DICT_FILE = FC_OUTPUT_DIR.joinpath(f'fmri_
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs')
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
 
-NIFTI_DATA_DIR = Path('../SleepyBrain_ref_image_fix/rfMRI_niftis')
+NIFTI_DATA_DIR = Path('../rfMRI_niftis')
 VOXELWISE_DIR = FC_OUTPUT_DIR.joinpath('voxelwise')
 VOXELWISE_DIR.mkdir(parents=True,exist_ok=True)
 GM_SIG_VAR_FILE = VOXELWISE_DIR.joinpath('voxelwise_GM_sig_variability.csv')
@@ -57,7 +57,7 @@ ATLAS_DIR = Path(f'../atlas')
 ATLAS_FILE = ATLAS_DIR.joinpath(f'TVB_SchaeferTian_fixed_{ATLAS}_2mm.nii.gz')
 ATLAS_FILE_4MM = ATLAS_DIR.joinpath(f'TVB_SchaeferTian_fixed_{ATLAS}_4mm.nii.gz')
 
-QC_DATA_DIR = Path('../SleepyBrain_ref_image_fix/QC_220/')
+QC_DATA_DIR = Path('../QC_220/')
 
 # %%
 # Get participants list
