@@ -5,7 +5,7 @@
 #SBATCH --mem=80G                 # Memory
 #SBATCH --nodes=1                 # Number of nodes
 
-module load StdEnv/2020 r/4.3.1 matlab/2022b.2
+module load StdEnv/2020 r/4.3.1 matlab/2022b.2 gcc/9.3.0 fsl/6.0.3
 source neudorf_venv/bin/activate
 export R_LIBS=~/.local/R/$EBVERSIONR/
 cd data/data_processing
