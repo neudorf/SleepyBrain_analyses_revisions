@@ -38,8 +38,9 @@ function LEiDA_Start
 %           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 %% A: STUDY PARAMETERS
-
+%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 project_dir = '/PATH/TO/DIR/'; %edit
+%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = [project_dir 'leida-matlab-1.0/'];
 % Directory of the folder with the parcellated neuroimaging data:
@@ -70,11 +71,11 @@ Paired_tests = 1;
 % Number of permutations. For the first analysis to be relatively quick,
 % run around 500 permutations, but then increase to 10000 to increase the
 % reliability of the final statistical results (p-values) for publication.
-n_permutations = 10000;
+n_permutations = 500;
 % Number of bootstrap samples within each permutation. For the first
 % analysis to be relatively quick, choose around 10, but then increase to
 % 500 for more reliable final results.
-n_bootstraps = 500;
+n_bootstraps = 10;
 
 % For the figure of the pyramid of PL states:
 % Direction to plot the FC states/brain ('SideView' or 'TopView'):

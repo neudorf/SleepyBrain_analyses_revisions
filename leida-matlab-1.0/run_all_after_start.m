@@ -1,11 +1,13 @@
 %%
+%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 project_dir = '/PATH/TO/DIR/'; %edit
+%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 LEiDA_directory = [project_dir 'leida-matlab-1.0/'];
 run_name = 'SleepyBrain_TVB_SchaeferTian_220';
 Parcellation = 'TVBSchaeferTian220';
 Conditions_tag = {'deprived_sleep','normal_sleep'};
-n_permutations = 10000; % can decrease for testing, then increase to 10000
-n_bootstraps = 500; % can decrease for testing, then increase to 500
+n_permutations = 500; % can keep as 500 testing, then increase to 10000
+n_bootstraps = 10; % can keep as 10 for testing, then increase to 500
 subjects_file = [project_dir 'data/good_subjects.txt']; 
 young_subjects_file = [project_dir 'data/data_processing/behav/good_subjects_YA.txt'];
 old_subjects_file = [project_dir 'data/data_processing/behav/good_subjects_OA.txt']; 

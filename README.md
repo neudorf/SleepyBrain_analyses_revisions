@@ -88,12 +88,12 @@ Fig. 11 C: `leida_FO_global_ggplot.png`
 #### Reviewer 3
 Figure 12: `outputs/modularity/Q.pdf`
 
-Table 1: compare results from `summary(lm)` in `modularity_analyses.r`
+Table 1: results from `summary(lm)` in `modularity_analyses.r`
 
 ### Order to run code:
 #### Local Bash
 1. `data/data_processing/import_SleepyBrain_data.py`
-2. LEiDA toolbox in `leida-matlab-1.0/`. Info is in the corresponding README.md as well, but edit paths at the top of `LEiDA_Start.m` and `run_all_after_start.m`. Then run `LEiDA_Start.m` followed by `run_all_after_start.m`. You can change `n_permutations` and `n_bootstraps` to a lower number for testing to make these run faster.
+2. LEiDA toolbox in `leida-matlab-1.0/`. Info is in the corresponding README.md as well, but edit path at the top of `LEiDA_Start.m` and `run_all_after_start.m`. Then run `LEiDA_Start.m` followed by `run_all_after_start.m`. You can change `n_permutations` and `n_bootstraps` to a higher number after testing.
 3. `mean_centred_pls.m` edit paths marked `% edit` first
 4. `modularity.m` edit path marked `% edit` first
 5. `rsfMRI_sleep_deprivation_analyses.py` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
