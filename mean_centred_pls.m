@@ -1,14 +1,17 @@
 %% FC
+%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 project_dir = '/PATH/TO/DIR/'; %edit
+%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
+
 data_dir = [project_dir 'data/data_processing'];
 outputs_dir = [project_dir 'outputs/PLS/mean_centred_PLS'];
 
 mkdir(outputs_dir);
 
-LEiDA_dir = '/PATH/TO/DIR/leida-matlab-1.0/res_SleepyBrain_TVB_SchaeferTian_220/K5/subject_data'; %edit
+LEiDA_dir = [project_dir 'leida-matlab-1.0/res_SleepyBrain_TVB_SchaeferTian_220/K5/subject_data]';
 
 young_subs_files = readlines([data_dir '/FC/TVBSchaeferTian220/matlab/' 'FC_young_subjects_files.csv']);
-old_subs_files = readlines([data_dir '/FC//TVBSchaeferTian220/matlab/' 'FC_old_subjects_files.csv']);
+old_subs_files = readlines([data_dir '/FC/TVBSchaeferTian220/matlab/' 'FC_old_subjects_files.csv']);
 
 bsr_filename = 'mean_centred_PLS_lv1_bsr_2.0thresh_FC.csv';
 usc_fig_filename = 'mean_centred_PLS_lv1_usc_FC.png';
