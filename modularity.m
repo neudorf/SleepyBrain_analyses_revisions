@@ -16,7 +16,7 @@ ALL_YA = cell(length(young_subs_files), 1);  % Adjust the size if needed
 % Loop through each row
 for s = 1:length(young_subs_files)
     % Construct the filename
-    filename = young_subs_files(s);
+    filename = [project_dir young_subs_files(s)];
     % Display filename
     disp(['Loading file: ' filename]);
     % Load the data
@@ -30,7 +30,7 @@ ALL_OA = cell(length(old_subs_files), 1);  % Adjust the size if needed
 % Loop through each row of the cell array
 for s = 1:length(old_subs_files)
     % Construct the filename
-    filename = old_subs_files(s);
+    filename = [project_dir old_subs_files(s)];
     % Display the filename
     disp(['Loading file: ' filename]);
     % Load the data
