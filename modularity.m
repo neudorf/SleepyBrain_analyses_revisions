@@ -1,5 +1,7 @@
 %% Prep
-project_dir = '/PATH/TO/DIR/'; % edit
+%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
+project_dir = '/PATH/TO/DIR/'; %edit
+%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 subject_files_dir = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/matlab/'];
 outputs_dir = [project_dir 'outputs/modularity/'];
 mkdir(outputs_dir);
