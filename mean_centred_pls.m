@@ -167,7 +167,7 @@ bsr_filename = 'mean_centred_PLS_young_deprived_vs_normal_lv1_bsr_2.0thresh_FC.c
 usc_fig_filename = 'mean_centred_PLS_young_deprived_vs_normal_lv1_usc_FC.png';
 results_filename = 'mean_centred_PLS_young_deprived_vs_normal_FC_result.mat';
 
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = young_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [23];
@@ -187,7 +187,7 @@ usc_fig_filename = 'mean_centred_PLS_old_deprived_vs_normal_lv1_usc_FC.png';
 results_filename = 'mean_centred_PLS_old_deprived_vs_normal_FC_result.mat';
 
 %%
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = old_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [19];
@@ -643,7 +643,7 @@ bsr_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_lv1_bsr_2.0thres
 usc_fig_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_lv1_usc_FC_degree.png';
 results_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_FC_degree_result.mat';
 
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = young_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [23];
@@ -663,7 +663,7 @@ usc_fig_filename = 'mean_centred_PLS_old_deprived_vs_normal_sleep_lv1_usc_FC_deg
 results_filename = 'mean_centred_PLS_old_deprived_vs_normal_sleep_FC_degree_result.mat';
 
 %%
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = old_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [19];
@@ -1152,7 +1152,7 @@ bsr_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_lv1_bsr_2.0thres
 usc_fig_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_lv1_usc_leida_FO.png';
 results_filename = 'mean_centred_PLS_young_deprived_vs_normal_sleep_leida_FO_result.mat';
 
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = young_subs_FO; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [23];
@@ -1172,7 +1172,7 @@ usc_fig_filename = 'mean_centred_PLS_old_deprived_vs_normal_sleep_lv1_usc_leida_
 results_filename = 'mean_centred_PLS_old_deprived_vs_normal_sleep_leida_FO_result.mat';
 
 %%
-datamat_lst = {}
+datamat_lst = {};
 datamat_lst{1} = old_subs_FO; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 
 num_subj = [19];
