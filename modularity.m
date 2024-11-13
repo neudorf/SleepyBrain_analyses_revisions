@@ -16,7 +16,7 @@ ALL_YA = cell(length(young_subs_files), 1);  % Adjust the size if needed
 % Loop through each row
 for s = 1:length(young_subs_files)
     % Construct the filename
-    filename = [project_dir young_subs_files(s)];
+    filename = strcat(project_dir, 'data/dataprocessing/', young_subs_files(s));
     % Display filename
     disp(['Loading file: ' filename]);
     % Load the data
@@ -30,7 +30,7 @@ ALL_OA = cell(length(old_subs_files), 1);  % Adjust the size if needed
 % Loop through each row of the cell array
 for s = 1:length(old_subs_files)
     % Construct the filename
-    filename = [project_dir old_subs_files(s)];
+    filename = strcat(project_dir, 'data/dataprocessing/', old_subs_files(s));
     % Display the filename
     disp(['Loading file: ' filename]);
     % Load the data
@@ -92,10 +92,12 @@ for s=1:old_subs_n
 end
 
 mod_table = table(FC_M);
-mod_table.modularity = mod_table.Var1;
-mod_table = removevars(mod_table,'Var1');
+mod_table.modularity = mod_table.FC_M;
+mod_table = removevars(mod_table,'FC_M');
 mod_table.sub = cat(1,young_subs,young_subs,old_subs,old_subs);
 
+age = strings(young_subs_n*2 + old_subs_n*2,1);
+sleep = strings(young_subs_n*2 + old_subs_n*2,1);
 for i=1:young_subs_n
     age(i) = 'young';
     sleep(i) = 'deprived';

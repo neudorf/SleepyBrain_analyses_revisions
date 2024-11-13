@@ -289,6 +289,7 @@ for s=1:length(old_male_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_female_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = young_male_subs_FC;
 datamat_lst{3} = old_female_subs_FC;
@@ -509,6 +510,7 @@ for s=1:length(old_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = old_subs_FC;
 
@@ -754,6 +756,7 @@ for s=1:length(old_male_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_female_subs_FC; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = young_male_subs_FC;
 datamat_lst{3} = old_female_subs_FC;
@@ -976,6 +979,7 @@ for s=1:length(old_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_subs_FO; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = old_subs_FO;
 
@@ -1273,6 +1277,7 @@ for s=1:length(old_male_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_female_subs_FO; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = young_male_subs_FO;
 datamat_lst{3} = old_female_subs_FO;
@@ -1354,6 +1359,7 @@ for s=1:length(old_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_subs_TM; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = old_subs_TM;
 
@@ -1463,6 +1469,7 @@ for s=1:length(old_male_subs_files)
 end
 
 %%
+datamat_lst = {};
 datamat_lst{1} = young_female_subs_TM; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
 datamat_lst{2} = young_male_subs_TM;
 datamat_lst{3} = old_female_subs_TM;
