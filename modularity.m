@@ -6,6 +6,8 @@ subject_files_dir = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/mat
 outputs_dir = [project_dir 'outputs/modularity/'];
 mkdir(outputs_dir);
 mod_table_filename = 'sleepybrain_modularity.csv';
+FC_mat_filename = 'sleepybrain_FC.mat';
+mod_mat_filename = 'sleepybrain_modularity.mat';
 
 %% GET DATA
 % YOUNG ADULTS
@@ -16,7 +18,7 @@ ALL_YA = cell(length(young_subs_files), 1);  % Adjust the size if needed
 % Loop through each row
 for s = 1:length(young_subs_files)
     % Construct the filename
-    filename = strcat(project_dir, 'data/dataprocessing/', young_subs_files(s));
+    filename = strcat(project_dir, 'data/data_processing/', young_subs_files(s));
     % Display filename
     disp(['Loading file: ' filename]);
     % Load the data
@@ -30,14 +32,15 @@ ALL_OA = cell(length(old_subs_files), 1);  % Adjust the size if needed
 % Loop through each row of the cell array
 for s = 1:length(old_subs_files)
     % Construct the filename
-    filename = strcat(project_dir, 'data/dataprocessing/', old_subs_files(s));
+    filename = strcat(project_dir, 'data/data_processing/', old_subs_files(s));
     % Display the filename
     disp(['Loading file: ' filename]);
     % Load the data
     ALL_OA{s} = load(filename);
 end
 
-ALL_SUBS = [ALL_YA; ALL_OA]; 
+ALL_SUBS = [ALL_YA; ALL_OA];
+save(fullfile(outputs_dir, FC_mat_filename),'ALL_SUBS');
 
 %% FC Community
 FC_community=[];
@@ -71,6 +74,8 @@ for s=1:length(young_subs_files) + length(old_subs_files)
     %Append partition
      FC_M=[FC_M; M'];
 end
+save(fullfile(outputs_dir, mod_mat_filename),'FC_community');
+
 %% SAVE
 young_subs_files_size = size(young_subs_files);
 young_subs_n = cast(young_subs_files_size(1) / 2,'uint8');
@@ -91,9 +96,9 @@ for s=1:old_subs_n
     old_subs(s) = str2num(old_subs_str);
 end
 
-mod_table = table(FC_M);
-mod_table.modularity = mod_table.FC_M;
-mod_table = removevars(mod_table,'FC_M');
+mod_table = table(FC_community);
+mod_table.modularity = mod_table.FC_community;
+mod_table = removevars(mod_table,'FC_community');
 mod_table.sub = cat(1,young_subs,young_subs,old_subs,old_subs);
 
 age = strings(young_subs_n*2 + old_subs_n*2,1);
