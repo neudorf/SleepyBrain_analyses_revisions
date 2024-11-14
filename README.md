@@ -6,7 +6,7 @@ Analysis code for: "Opposite effects of acute sleep restriction on the dynamic a
 ```bash
 git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
 cd SleepyBrain_analyses
-conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine
+conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine networkx
 conda activate neudorf_venv
 pip install nctpy
 python -m pip install matlabengine=9.13.11 #matlab 2022b.2
@@ -27,7 +27,7 @@ cd SleepyBrain_analyses
 module load StdEnv/2020 matlab/2022b.2 python/3.10
 python3.10 -m venv neudorf_venv
 source neudorf_venv/bin/activate
-pip install numpy scipy nibabel nilearn matplotlib==3.6.2 pillow pandas seaborn==0.12.1 tqdm statsmodels plotnine==0.12.3 certifi nctpy
+pip install numpy scipy nibabel nilearn matplotlib==3.6.2 pillow pandas seaborn==0.12.1 tqdm statsmodels plotnine==0.12.3 certifi nctpy networkx
 #edit line below by finding matlabroot using `which matlab`, and substitute `matlab` executable with `glnxa64`
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2020/x86-64-v3/Core/matlab/2022b.2/bin/glnxa64
 #set matlabengine version number to match matlab version 2022b.2
