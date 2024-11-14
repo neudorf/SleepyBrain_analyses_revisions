@@ -30,7 +30,7 @@ DATA_PROCESSING_DIR = Path('data/data_processing/')
 BEHAV_DIR = DATA_PROCESSING_DIR.joinpath('behav')
 BEHAV_FILE = BEHAV_DIR.joinpath('behav_good_subs.csv')
 
-SA_AXIS_FILE = Path('atlas/schaefer200x17_SAaxis.csv')
+SA_AXIS_FILE = Path('data/atlas/schaefer200x17_SAaxis.csv')
 
 ATLAS_FRIENDLY_NAMES_FILE = DATA_PROCESSING_DIR.joinpath('BrainNet_templates/TVBSchaeferTian220_MNI_node_friendly_names.node')
 
