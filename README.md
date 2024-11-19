@@ -106,3 +106,4 @@ For HPC (Alliance Canada), use sbatch submission scripts provided:
  - `3_submit_matlab_analyses.sh` (refer to steps 3 & 4 above and edit paths)
  - `4_submit_python_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
  - `5_submit_r_analyses.sh`
+ - `6_submit_FC_null_array.sh` (optional for FAIR review) first edit path at top of FC_null_array.m
