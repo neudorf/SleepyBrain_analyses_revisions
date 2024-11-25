@@ -1,4 +1,4 @@
-Analysis code for: "Opposite effects of acute sleep restriction on the dynamic and static functional connectivity network of young and old adult brains"
+# Analysis code for: "Opposite effects of acute sleep restriction on the dynamic and static functional connectivity network of young and old adult brains"
 
 ## Environment installation instructions:
 ### Python:
@@ -22,6 +22,7 @@ python -m pip install .
 
 #### HPC (Alliance Canada) Bash
 ```bash
+cd ~/scratch
 git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
 cd SleepyBrain_analyses
 module load StdEnv/2020 matlab/2022b.2 python/3.10
@@ -100,7 +101,8 @@ Table 1: results from `summary(lm)` in `modularity_analyses.r`
 6. `GM_sig_var_analyses.r`, `modularity_analyses.r`, and `PLS_usc_figures.r` in no particular order.
 
 #### HPC (Alliance Canada) Bash
-For HPC (Alliance Canada), use sbatch submission scripts provided:
+Use sbatch submission scripts provided:
+ - `0_copy_data.sh`
  - `1_submit_preprocessing.sh`
  - `leida-matlab-1.0/2_submit_leida.sh` (refer to step 2. above and edit paths)
  - `3_submit_matlab_analyses.sh` (refer to steps 3 & 4 above and edit paths)
