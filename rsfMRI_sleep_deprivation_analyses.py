@@ -23,9 +23,6 @@ from neuromaps import transforms
 from nilearn import plotting, datasets
 
 RSCRIPT = '/usr/bin/Rscript'
-#Below for Alliance Canada
-#FLIRT_SCRIPT = '/cvmfs/restricted.computecanada.ca/easybuild/software/2023/x86-64-v3/Core/fsl/6.0.7.7/share/fsl/bin/flirt'
-FLIRT_SCRIPT = 'flirt'
 
 ATLAS = '220'
 
@@ -923,7 +920,7 @@ mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 analysis_name = 'young_deprived_vs_normal_sleep'
 mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
 mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
-os.system(f'{FLIRT_SCRIPT} -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
+os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
 
 mdmr_img = nib.load(mdmr_nifti_file_2mm)
 # mdmr_affine = mdmr_img.affine
