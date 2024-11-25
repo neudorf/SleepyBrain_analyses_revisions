@@ -1,7 +1,6 @@
 library(lme4)
 library(ggplot2)
 library(effects)
-library(car)
 library(here)
 
 sig_var_file = here('data/data_processing/FC/TVBSchaeferTian220/voxelwise/voxelwise_GM_sig_variability.csv')

@@ -1,7 +1,6 @@
 library(lme4)
 library(ggplot2)
 library(effects)
-library(car)
 library(tidyverse)
 library(here)
 
