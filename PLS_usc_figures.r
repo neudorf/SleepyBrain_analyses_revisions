@@ -49,7 +49,7 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   geom_hline(yintercept=0,colour='#444444') +
   ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + labs(linetype='Sex',shape='Sex') +
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'))
+  theme(text = element_text(size=20))
 ggsave(FC_usc_plot_file)
 
 #FC Degree
@@ -90,7 +90,7 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   geom_hline(yintercept=0,colour='#444444') +
   ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + labs(linetype='Sex',shape='Sex') +
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'))
+  theme(text = element_text(size=20))
 ggsave(FC_usc_plot_file)
 
 #LEiDA FO
@@ -133,7 +133,7 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   geom_hline(yintercept=0,colour='#444444') +
   ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + labs(linetype='Sex',shape='Sex') +
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'))
+  theme(text = element_text(size=20))
 ggsave(FC_usc_plot_file)
 
 # Global FO mean plot
@@ -142,7 +142,7 @@ ggplot(FC_usc_df_means,aes(x=cond,FO_global)) +
   scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
   ylab('Global Coherence State FO') + xlab('Group (Sleep Condition)') + guides(fill = 'none') +
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'), panel.border = element_blank(), panel.grib = element_blank())+
+  theme(text = element_text(size=20), panel.border = element_blank(), panel.grib = element_blank())+
   scale_y_continuous(expand=c(0,0)) # removes gap between 0 and y axis line
 
 ggsave(FO_mean_plot_file)
@@ -191,7 +191,7 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   geom_hline(yintercept=0,colour='#444444') +
   ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + 
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'), axis.text.x = element_text(angle = 45, vjust = 1,hjust=1,size=12))
+  theme(text = element_text(size=20), axis.text.x = element_text(angle = 45, vjust = 1,hjust=1,size=12))
 ggsave(FC_usc_plot_file)
 
 #FC Sex
@@ -238,5 +238,5 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   geom_hline(yintercept=0,colour='#444444') +
   ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + 
   theme_classic() +
-  theme(text = element_text(size=20,family='Arial'), axis.text.x = element_text(angle = 45, vjust = 1,hjust=1,size=12))
+  theme(text = element_text(size=20), axis.text.x = element_text(angle = 45, vjust = 1,hjust=1,size=12))
 ggsave(FC_usc_plot_file)
