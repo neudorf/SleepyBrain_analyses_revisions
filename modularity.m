@@ -120,4 +120,7 @@ for i=young_subs_n*2+old_subs_n+1:young_subs_n*2+old_subs_n*2
     sleep(i) = 'normal';
 end
 
+mod_table.age = age;
+mod_table.sleep = sleep;
+
 writetable(mod_table,fullfile(outputs_dir, mod_table_filename));
