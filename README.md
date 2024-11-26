@@ -1,5 +1,7 @@
 # Analysis code for: "Opposite effects of acute sleep restriction on the dynamic and static functional connectivity network of young and old adult brains"
 
+Working manuscript [here](https://1sfu-my.sharepoint.com/:w:/g/personal/jneudorf_sfu_ca/EXsLHFDGinBDk5A3kxfFUdUBxr3d3K1FVV7HrVlWiet5nQ?e=AvHv8S)
+
 ## Environment installation instructions:
 ### Python:
 #### Local Bash
