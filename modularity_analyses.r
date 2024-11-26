@@ -30,12 +30,15 @@ lines(x = c(1, 1), y = c(effect("sleep*age", lm)$lower[4], effect("sleep*age", l
 legend("topleft", lty = 1, lwd = 1.5, pch = 16, col = cols[3:2], legend = c("Young", "Old"), bty = "n")
 dev.off()
 
-lm2 = lmer(Q ~ sleep*age + sex + (1|sub), mod_df)
-summary(lm2)
-
 attention_df = read.csv(here('data/participants.tsv'),sep='\t')
 attention_df$sub = factor(substr(attention_df$participant_id, 5,8))
 attention_df$BADD_Attention = as.numeric(attention_df$BADD_Attention)
+attention_df$sex = factor(attention_df$Sex, levels = c('Female','Male'))
+
+mod_sex_df = merge(attention_df,mod_df)
+
+lm2 = lmer(Q ~ sleep*age + sex + (1|sub), mod_sex_df)
+summary(lm2)
 
 attention_df = attention_df[,c('sub','BADD_Attention')]
 
