@@ -9,7 +9,7 @@ mod_df = read.csv(mod_file,sep=',')
 mod_df$sub = factor(mod_df$sub)
 mod_df$age = factor(mod_df$age, levels = c('young','old'))
 mod_df$sleep = factor(mod_df$sleep, levels = c('normal','deprived'))
-mod_df$Q = as.numeric(mod_df$Q)
+mod_df$Q = as.numeric(mod_df$modularity)
 
 lm = lmer(Q ~ sleep*age + (1|sub), mod_df)
 summary(lm)
