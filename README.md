@@ -66,7 +66,6 @@ Follow instructions here and add `plscmd` folder to startup.m: https://github.co
 git clone https://github.com/McIntosh-Lab/PLS
 cp -r PLS/plscmd ~/matlab
 echo "addpath(genpath('~/matlab/plscmd'))" >> ~/matlab/startup.m
-echo "addpath(genpath('${PWD}/python_packages/PLS_wrapper'))" >> ~/matlab/startup.m
 ```
 
 ## Usage
@@ -80,9 +79,9 @@ Fig. 7 B: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_FC_de
 Fig. 7 C: `outputs/PLS/mean_centred_PLS/SA_axis_schaefer200x17_ggseg.png`
 
 #### Reviewer 2
-Fig. 11 A: `outputs/PLS/mean_centred_PLS_lv1_usc_table_leida_FO_ggplot.png`
+Fig. 11 A: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_FO_ggplot.png`
 
-Fig. 11 B: based on values in `outputs/PLS/mean_centred_PLS_lv1_bsr_2.0thresh_leida_FO.csv`
+Fig. 11 B: based on values in `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_leida_FO.csv`
 
 Fig. 11 C: `leida_FO_global_ggplot.png`
 
