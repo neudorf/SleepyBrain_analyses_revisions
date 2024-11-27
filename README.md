@@ -12,7 +12,7 @@ conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nile
 conda activate neudorf_venv
 pip install nctpy
 python -m pip install matlabengine=9.13.11 #matlab 2022b.2
-cd python_packages
+cd python_libraries
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
 python -m pip install .
@@ -35,7 +35,7 @@ pip install numpy scipy nibabel nilearn matplotlib==3.6.2 pillow pandas seaborn=
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2020/x86-64-v3/Core/matlab/2022b.2/bin/glnxa64
 #set matlabengine version number to match matlab version 2022b.2
 python -m pip install matlabengine==9.13.11
-cd python_packages
+cd python_libraries
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
 python -m pip install .
