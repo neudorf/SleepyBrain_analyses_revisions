@@ -7,9 +7,9 @@
 
 echo starting
 cd data
-cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/connectivity_220.tar.gz .
-cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/QC_220.tar.gz .
-cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/rfMRI_niftis.tar.gz .
+cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/pipeline_outputs_FIXed/connectivity_220.tar.gz .
+cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/pipeline_outputs_FIXed/QC_220.tar.gz .
+cp ~/projects/def-rmcintos/jneudorf/SleepyBrain_DMP/pipeline_outputs/pipeline_outputs_FIXed/rfMRI_niftis.tar.gz .
 tar -xf connectivity_220.tar.gz
 tar -xf QC_220.tar.gz
 tar -xf rfMRI_niftis.tar.gz
