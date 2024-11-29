@@ -8,7 +8,7 @@ outputs_dir = [project_dir 'outputs/PLS/mean_centred_PLS'];
 
 mkdir(outputs_dir);
 
-LEiDA_dir = [project_dir 'leida-matlab-1.0/res_SleepyBrain_TVB_SchaeferTian_220/K5/subject_data]';
+LEiDA_dir = [project_dir 'leida-matlab-1.0/res_SleepyBrain_TVB_SchaeferTian_220/K5/subject_data'];
 
 young_subs_files = readlines([data_dir '/FC/TVBSchaeferTian220/matlab/' 'FC_young_subjects_files.csv']);
 old_subs_files = readlines([data_dir '/FC/TVBSchaeferTian220/matlab/' 'FC_old_subjects_files.csv']);
