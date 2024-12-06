@@ -3,6 +3,8 @@
 Working manuscript [here](https://1sfu-my.sharepoint.com/:w:/g/personal/jneudorf_sfu_ca/EXsLHFDGinBDk5A3kxfFUdUBxr3d3K1FVV7HrVlWiet5nQ?e=AvHv8S)
 
 ## Environment installation instructions:
+Note: for each section follow the instructions in *either* the `Local Bash` or the `HPC (Alliance Canada) Bash` subsection.
+
 ### Python:
 #### Local Bash
 ```bash
