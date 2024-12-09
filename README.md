@@ -22,6 +22,7 @@ cd ../brainvistools
 python -m pip install .
 cd ../PyNeudorf
 python -m pip install .
+cd ../..
 ```
 
 #### HPC (Alliance Canada) Bash
@@ -45,6 +46,7 @@ cd ../brainvistools
 python -m pip install .
 cd ../PyNeudorf
 python -m pip install .
+cd ../..
 ```
 
 ### R:
