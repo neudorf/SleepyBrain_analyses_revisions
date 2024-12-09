@@ -28,7 +28,9 @@ python -m pip install .
 ```bash
 cd ~/scratch
 git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
-cd SleepyBrain_analyses
+cd SleepyBrain_analyses/python_libraries
+git clone https://github.com/netneurolab/neuromaps
+cd ..
 module load StdEnv/2020 matlab/2022b.2 python/3.10
 python3.10 -m venv neudorf_venv
 source neudorf_venv/bin/activate
@@ -37,9 +39,7 @@ pip install numpy scipy nibabel nilearn matplotlib==3.6.2 pillow pandas seaborn=
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/cvmfs/restricted.computecanada.ca/easybuild/software/2020/x86-64-v3/Core/matlab/2022b.2/bin/glnxa64
 #set matlabengine version number to match matlab version 2022b.2
 python -m pip install matlabengine==9.13.11
-cd python_libraries
-git clone https://github.com/netneurolab/neuromaps
-cd neuromaps
+cd python_libraries/neuromaps
 python -m pip install .
 cd ../brainvistools
 python -m pip install .
