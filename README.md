@@ -102,15 +102,15 @@ Table 1: results from `summary(lm)` in `modularity_analyses.r`
 2. LEiDA toolbox in `leida-matlab-1.0/`. Info is in the corresponding README.md as well, but edit path at the top of `LEiDA_Start.m` and `run_all_after_start.m`. Then run `LEiDA_Start.m` followed by `run_all_after_start.m`. You can change `n_permutations` and `n_bootstraps` to a higher number after testing.
 3. `mean_centred_pls.m` edit paths marked `% edit` first
 4. `modularity.m` edit path marked `% edit` first
-5. `rsfMRI_sleep_deprivation_analyses.py` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
+5. `rsfMRI_sleep_deprivation_analyses.py`
 6. `GM_sig_var_analyses.r`, `modularity_analyses.r`, and `PLS_usc_figures.r` in no particular order.
 
 #### HPC (Alliance Canada) Bash
 Use sbatch submission scripts provided:
  - `0_copy_data.sh`
  - `1_submit_preprocessing.sh`
- - `leida-matlab-1.0/2_submit_leida.sh` (refer to step 2. above and edit paths)
- - `3_submit_matlab_analyses.sh` (refer to steps 3 & 4 above and edit paths)
+ - `leida-matlab-1.0/2_submit_leida.sh` (info is in the corresponding README.md as well, but edit path at the top of `LEiDA_Start.m` and `run_all_after_start.m`)
+ - `3_submit_matlab_analyses.sh` (edit paths marked `% edit` first in `mean_centred_pls.m` and `modularity.m`)
  - `4_submit_python_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
  - `5_submit_r_analyses.sh`
  - `6_submit_FC_null_array.sh` (optional for FAIR review) first edit path at top of FC_null_array.m
