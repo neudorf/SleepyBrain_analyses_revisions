@@ -107,10 +107,10 @@ Table 1: results from `summary(lm)` in `modularity_analyses.r`
 
 #### HPC (Alliance Canada) Bash
 Use sbatch submission scripts provided:
- - `0_copy_data.sh`
- - `1_submit_preprocessing.sh`
- - `leida-matlab-1.0/2_submit_leida.sh` (info is in the corresponding README.md as well, but edit path at the top of `LEiDA_Start.m` and `run_all_after_start.m`)
- - `3_submit_matlab_analyses.sh` (edit paths marked `% edit` first in `mean_centred_pls.m` and `modularity.m`)
- - `4_submit_python_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
- - `5_submit_r_analyses.sh`
- - `6_submit_FC_null_array.sh` (optional for FAIR review) first edit path at top of FC_null_array.m
+ - `sbatch 0_copy_data.sh`
+ - `sbatch 1_submit_preprocessing.sh`
+ - change directories with `cd leida-matlab-1.0` then `sbatch 2_submit_leida.sh` (info is in the corresponding README.md as well, but edit path at the top of `LEiDA_Start.m` and `run_all_after_start.m`). When done change directories back to project with `cd ..`.
+ - `sbatch 3_submit_matlab_analyses.sh` (edit paths marked `% edit` first in `mean_centred_pls.m` and `modularity.m`)
+ - `sbatch 4_submit_python_analyses.sh` (change `RSCRIPT='/usr/bin/Rscript'` at top of `rsfMRI_sleep_deprivation_analyses.py` to `RSCRIPT='/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'`)
+ - `sbatch 5_submit_r_analyses.sh`
+ - `sbatch 6_submit_FC_null_array.sh` (optional for FAIR review) first edit path at top of FC_null_array.m
