@@ -12,16 +12,15 @@ git clone https://github.com/McIntosh-Lab/SleepyBrain_analyses.git
 cd SleepyBrain_analyses
 conda create -n neudorf_venv -c conda-forge python=3.10 numpy scipy nibabel nilearn matplotlib pillow pandas seaborn tqdm statsmodels plotnine networkx
 conda activate neudorf_venv
-pip install nctpy
-python -m pip install matlabengine=9.13.11 #matlab 2022b.2
+pip install nctpy matlabengine=9.13.11 #matlab 2022b.2
 cd python_packages
 git clone https://github.com/netneurolab/neuromaps
 cd neuromaps
-python -m pip install .
+pip install .
 cd ../brainvistools
-python -m pip install .
+pip install .
 cd ../PyNeudorf
-python -m pip install .
+pip install .
 cd ../..
 ```
 
