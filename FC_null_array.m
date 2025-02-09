@@ -1,6 +1,4 @@
-%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 project_dir = './';
-%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 
 mod_dir = [project_dir 'outputs/modularity/'];
 

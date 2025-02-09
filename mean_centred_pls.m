@@ -1,7 +1,5 @@
 %% FC
-%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 project_dir = './';
-%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 
 data_dir = [project_dir 'data/data_processing'];
 outputs_dir = [project_dir 'outputs/PLS/mean_centred_PLS'];
