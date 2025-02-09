@@ -1,6 +1,6 @@
 %% Prep
 %%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
-project_dir = '/PATH/TO/DIR/'; %edit
+project_dir = './';
 %%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
 subject_files_dir = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/matlab/'];
 outputs_dir = [project_dir 'outputs/modularity/'];

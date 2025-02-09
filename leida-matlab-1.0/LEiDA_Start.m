@@ -38,9 +38,7 @@ function LEiDA_Start
 %           Miguel Farinha, University of Minho, miguel.farinha@ccabraga.org
 
 %% A: STUDY PARAMETERS
-%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
-project_dir = '/PATH/TO/DIR/'; %edit
-%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
+project_dir = '../';
 % Directory of the LEiDA toolbox folder:
 LEiDA_directory = [project_dir 'leida-matlab-1.0/'];
 % Directory of the folder with the parcellated neuroimaging data:
