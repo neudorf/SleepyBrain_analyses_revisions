@@ -1,7 +1,5 @@
 %%
-%%%%%%%%%%%% EDIT PATH BELOW TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
-project_dir = '../';
-%%%%%%%%%%%% EDIT PATH ABOVE TO PROJECT DIRECTORY (GITHUB ROOT) %%%%%%%%%%%%
+project_dir = [fileparts(pwd) '/'];
 LEiDA_directory = [project_dir 'leida-matlab-1.0/'];
 run_name = 'SleepyBrain_TVB_SchaeferTian_220';
 Parcellation = 'TVBSchaeferTian220';
