@@ -17,6 +17,7 @@ summary(lm)
 plot(effect("sleep*age",lm))
 
 cols = c('#444444','#2AA198','#D33682')
+dir.create(here("outputs/variability"))
 pdf(here("outputs/variability/GM_sig_var.pdf"), height = 6, width = 6) 
 par(mar = c(4, 5, 1, 2))
 plot(1, frame.plot = F, xlim = c(0, 1), ylim = c(2.8, 3.6), xlab = "", ylab = "GM signal variability (ln(SD))", xaxt = "n", type = "n")
