@@ -1,6 +1,6 @@
 # Analysis code for: "Opposite effects of acute sleep restriction on the dynamic and static functional connectivity network of young and old adult brains"
 
-This page includes the analysis code for our manuscript entitled: "Opposite effects of acute sleep restriction on the dynamic and static functional connectivity network of young and old adult brains" (working manuscript [here](https://1sfu-my.sharepoint.com/:w:/g/personal/jneudorf_sfu_ca/EXsLHFDGinBDk5A3kxfFUdUBxr3d3K1FVV7HrVlWiet5nQ?e=AvHv8S)). The analyses in this manuscript can be reproduced using the code included here. To do so, begin by (1) setting up your environment by following the instructions under "Environment installation instructions" (you can set up an environment either locally or on a high-performance computing cluster). Then, (2) run the code in the order specified under the "Order to run code" section.
+This page includes the analysis code for our manuscript entitled: "Young and old adult brains experience opposite effects of acute sleep restriction on the functional connectivity network" (preprint [here](https://doi.org/10.1101/2025.07.25.666859)). The analyses in this manuscript can be reproduced using the code included here. To do so, begin by (1) setting up your environment by following the instructions under "Environment installation instructions" (you can set up an environment either locally or on a high-performance computing cluster). Then, (2) run the code in the order specified under the "Order to run code" section.
 
 ## Environment installation instructions:
 Note: for each section follow the instructions in *either* the `Local Bash` or the `HPC (Alliance Canada) Bash` subsection.
@@ -94,23 +94,3 @@ Use sbatch submission scripts provided:
      1. `sbatch 5_submit_r_analyses.sh`
  7. Submit null testing matlab script (6_submit_FC_null_array.sh; optional for FAIR review):
      1. `sbatch 6_submit_FC_null_array.sh`
-
-### For code review:
-#### Reviewer 1
-Fig. 7 A: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_FC_degree_usc_ggplot.png`
-
-Fig. 7 B: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_FC_degree_cortex.png` and `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_FC_degree_subcortex.png`
-
-Fig. 7 C: `outputs/PLS/mean_centred_PLS/SA_axis_schaefer200x17_ggseg.png`
-
-#### Reviewer 2
-Fig. 11 A: `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_FO_ggplot.png`
-
-Fig. 11 B: based on values in `outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_bsr_2.0thresh_leida_FO.csv`
-
-Fig. 11 C: `leida_FO_global_ggplot.png`
-
-#### Reviewer 3
-Figure 12: `outputs/modularity/Q.pdf`
-
-Table 1: results from `summary(lm)` in `modularity_analyses.r`
