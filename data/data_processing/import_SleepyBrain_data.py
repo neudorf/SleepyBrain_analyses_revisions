@@ -9,6 +9,9 @@ import nibabel as nib
 from nibabel.processing import resample_from_to
 import os
 
+#REMOVE FOLLOWING FOR GITHUB REPOSITORY
+DATA_DIR = Path('/media/WDBlue/mcintosh/data/SleepyBrain/SleepyBrain_ref_image_fix')
+
 ATLAS = '220'
 TR = 2.5
 BEHAV_FILE = Path('../participants.tsv')
@@ -25,7 +28,8 @@ YA_MALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_YA_male.txt')
 OA_FEMALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_OA_female.txt')
 OA_MALE_SUBS_FILE = BEHAV_OUTPUT_DIR.joinpath('good_subjects_OA_male.txt')
 
-FC_DATA_DIR = Path('../connectivity_220')
+#FC_DATA_DIR = Path('../connectivity_220') #RESTORE FOR GITHUB
+FC_DATA_DIR =  DATA_DIR.joinpath('connectivity_220') #REMOVE FOR GITHUB
 FC_OUTPUT_DIR = Path(f'FC/TVBSchaeferTian{ATLAS}')
 FC_OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
 FC_OUTPUT_MATLAB_DIR = FC_OUTPUT_DIR.joinpath('matlab')
@@ -41,7 +45,8 @@ FMRI_TIMESERIES_FILTERED_NORMAL_SLEEP_DICT_FILE = FC_OUTPUT_DIR.joinpath(f'fmri_
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs')
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
 
-NIFTI_DATA_DIR = Path('../rfMRI_niftis')
+#NIFTI_DATA_DIR = Path('../rfMRI_niftis') #RESTORE FOR GITHUB
+NIFTI_DATA_DIR = DATA_DIR.joinpath('rfMRI_niftis') #REMOVE FORE GITHUB
 VOXELWISE_DIR = FC_OUTPUT_DIR.joinpath('voxelwise')
 VOXELWISE_DIR.mkdir(parents=True,exist_ok=True)
 GM_SIG_VAR_FILE = VOXELWISE_DIR.joinpath('voxelwise_GM_sig_variability.csv')
@@ -57,7 +62,8 @@ ATLAS_DIR = Path(f'../atlas')
 ATLAS_FILE = ATLAS_DIR.joinpath(f'TVB_SchaeferTian_fixed_{ATLAS}_2mm.nii.gz')
 ATLAS_FILE_4MM = ATLAS_DIR.joinpath(f'TVB_SchaeferTian_fixed_{ATLAS}_4mm.nii.gz')
 
-QC_DATA_DIR = Path('../QC_220/')
+#QC_DATA_DIR = Path('../QC_220/') #RESTORE FOR GITHUB
+QC_DATA_DIR = DATA_DIR.joinpath('QC_220') #REMOVE FOR GITHUB
 
 # %%
 # Get participants list
