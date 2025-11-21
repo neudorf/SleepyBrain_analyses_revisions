@@ -14,6 +14,9 @@ sig_var_df$framewise_displacement = as.numeric(sig_var_df$framewise_displacement
 lm = lmer(log(GM_sig_variability) ~ sleep*age + framewise_displacement + (1| sub), sig_var_df)
 summary(lm)
 
+lm2 = lmer(log(GM_sig_variability) ~ sleep*age + (1| sub), sig_var_df)
+summary(lm2)
+
 plot(effect("sleep*age",lm))
 
 cols = c('#444444','#2AA198','#D33682')
