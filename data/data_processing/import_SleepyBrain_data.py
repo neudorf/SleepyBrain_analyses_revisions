@@ -15,6 +15,8 @@ DATA_DIR = Path('/media/WDBlue/mcintosh/data/SleepyBrain/SleepyBrain_ref_image_f
 ATLAS = '220'
 TR = 2.5
 BEHAV_FILE = Path('../participants.tsv')
+#MOTION_FILE = Path('../../QC_220/motion.csv') #REPLACE FOR GITHUB
+MOTION_FILE = Path('/media/WDBlue/mcintosh/data/SleepyBrain/SleepyBrain_ref_image_fix/QC_220/motion.csv') #REMOVE FOR GITHUB
 
 GOOD_SUBJECTS_FILE = Path('../good_subjects.txt')
 
@@ -269,7 +271,40 @@ create_file_list_pls(old_subjects,'FC_old_subjects_files.csv','_FC_deprived_slee
 create_file_list_pls(young_subjects_female,'FC_young_female_subjects_files.csv','_FC_deprived_sleep_YA.csv','_FC_normal_sleep_YA.csv')
 create_file_list_pls(young_subjects_male,'FC_young_male_subjects_files.csv','_FC_deprived_sleep_YA.csv','_FC_normal_sleep_YA.csv')
 create_file_list_pls(old_subjects_female,'FC_old_female_subjects_files.csv','_FC_deprived_sleep_OA.csv','_FC_normal_sleep_OA.csv')
-create_file_list_pls(old_subjects_male,'FC_old_male_subjects_files.csv','_FC_deprived_sleep_OA.csv','_FC_normal_sleep_OA.csv')  
+create_file_list_pls(old_subjects_male,'FC_old_male_subjects_files.csv','_FC_deprived_sleep_OA.csv','_FC_normal_sleep_OA.csv')
+
+#%% Motion data for matlab PLS analyses
+motion_pd = pd.read_csv(MOTION_FILE)
+with open(FC_OUTPUT_MATLAB_DIR.joinpath('young_subjects_motion.csv'),'w') as f:
+    f.write('')
+for young_sub in young_subjects:
+    motion_deprived = motion_pd.loc[(motion_pd['subject']==young_sub) & (motion_pd['sleep']=='deprived'),['motion']].values[0][0]
+    with open(FC_OUTPUT_MATLAB_DIR.joinpath('young_subjects_motion.csv'),'a') as f:
+        f.write(f'{motion_deprived}\n')
+
+for young_sub in young_subjects:
+    motion_normal = motion_pd.loc[(motion_pd['subject']==young_sub) & (motion_pd['sleep']=='normal'),['motion']].values[0][0]
+    with open(FC_OUTPUT_MATLAB_DIR.joinpath('young_subjects_motion.csv'),'a') as f:
+        f.write(f'{motion_normal}')
+        if young_sub != young_subjects[-1]:
+            f.write('\n')
+
+with open(FC_OUTPUT_MATLAB_DIR.joinpath('old_subjects_motion.csv'),'w') as f:
+    f.write('')
+for old_sub in old_subjects:
+    print(old_sub)
+    motion_deprived = motion_pd.loc[(motion_pd['subject']==old_sub) & (motion_pd['sleep']=='deprived'),['motion']].values[0][0]
+    with open(FC_OUTPUT_MATLAB_DIR.joinpath('old_subjects_motion.csv'),'a') as f:
+        f.write(f'{motion_deprived}\n')
+
+for old_sub in old_subjects:
+    print(old_sub)
+    motion_normal = motion_pd.loc[(motion_pd['subject']==old_sub) & (motion_pd['sleep']=='normal'),['motion']].values[0][0]
+    with open(FC_OUTPUT_MATLAB_DIR.joinpath('old_subjects_motion.csv'),'a') as f:
+        f.write(f'{motion_normal}')
+        if old_sub != old_subjects[-1]:
+            f.write('\n')
+
 
 #%% Graph theory nodal measures
 # Degree
