@@ -46,6 +46,14 @@ FMRI_TIMESERIES_FILTERED_DEPRIVED_SLEEP_DICT_FILE = FC_OUTPUT_DIR.joinpath('fmri
 FMRI_TIMESERIES_FILTERED_NORMAL_SLEEP_DICT_FILE = FC_OUTPUT_DIR.joinpath(f'fmri_timeseries_filtered_zscore_normal_sleep_dict.pkl')
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs')
 FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
+FMRI_TIMESERIES_YA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs_YA_normal_sleep')
+FMRI_TIMESERIES_YA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
+FMRI_TIMESERIES_YA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs_YA_deprived_sleep')
+FMRI_TIMESERIES_YA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
+FMRI_TIMESERIES_OA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs_OA_normal_sleep')
+FMRI_TIMESERIES_OA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
+FMRI_TIMESERIES_OA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR = FC_OUTPUT_MATLAB_DIR.joinpath('leida_inputs_OA_deprived_sleep')
+FMRI_TIMESERIES_OA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR.mkdir(parents=True,exist_ok=True)
 
 #NIFTI_DATA_DIR = Path('../rfMRI_niftis') #RESTORE FOR GITHUB
 NIFTI_DATA_DIR = DATA_DIR.joinpath('rfMRI_niftis') #REMOVE FORE GITHUB
@@ -184,14 +192,18 @@ with open(FMRI_TIMESERIES_FILTERED_NORMAL_SLEEP_DICT_FILE,'wb') as f:
 for sub in young_subjects:
     save_name = f'{sub}_deprived_sleep.txt'
     np.savetxt(FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_deprived_sleep_dict[sub],delimiter='\t')
+    np.savetxt(FMRI_TIMESERIES_YA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_deprived_sleep_dict[sub],delimiter='\t')
     save_name = f'{sub}_normal_sleep.txt'
     np.savetxt(FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_normal_sleep_dict[sub],delimiter='\t')
+    np.savetxt(FMRI_TIMESERIES_YA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_normal_sleep_dict[sub],delimiter='\t')
 
 for sub in old_subjects:
     save_name = f'{sub}_deprived_sleep.txt'
     np.savetxt(FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_deprived_sleep_dict[sub],delimiter='\t')
+    np.savetxt(FMRI_TIMESERIES_OA_DEPRIVED_SLEEP_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_deprived_sleep_dict[sub],delimiter='\t')
     save_name = f'{sub}_normal_sleep.txt'
     np.savetxt(FMRI_TIMESERIES_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_normal_sleep_dict[sub],delimiter='\t')
+    np.savetxt(FMRI_TIMESERIES_OA_NORMAL_SLEEP_OUTPUT_MATLAB_DIR.joinpath(f'{save_name}'),rsfMRI_filtered_zscore_normal_sleep_dict[sub],delimiter='\t')
 
 #%%Frequency power spectrum
 from matplotlib import pyplot as plt
