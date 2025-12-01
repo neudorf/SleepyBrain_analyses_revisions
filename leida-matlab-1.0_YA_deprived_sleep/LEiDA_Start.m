@@ -40,14 +40,14 @@ function LEiDA_Start
 %% A: STUDY PARAMETERS
 project_dir = '../'; %change for github?
 % Directory of the LEiDA toolbox folder:
-LEiDA_directory = [project_dir 'leida-matlab-1.0_YA_normal_sleep/'];
+LEiDA_directory = [project_dir 'leida-matlab-1.0_YA_deprived_sleep/'];
 % Directory of the folder with the parcellated neuroimaging data:
-Data_directory = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/matlab/leida_inputs_YA_normal_sleep/'];
+Data_directory = [project_dir 'data/data_processing/FC/TVBSchaeferTian220/matlab/leida_inputs_YA_deprived_sleep/'];
 % Name of the run to be used to create the folder to save the data:
 run_name = 'SleepyBrain_TVB_SchaeferTian_220';
 % Tag of conditions given in the parcellated image files:
 %Conditions_tag = {'deprived_sleep','normal_sleep'};
-Conditions_tag = {'normal_sleep'};
+Conditions_tag = {'deprived_sleep'};
 % Parcellation applied to the imaging data (see tutorial):
 Parcellation = 'TVBSchaeferTian220';
 % Number of brain areas to consider for analysis:

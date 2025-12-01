@@ -1,7 +1,7 @@
 %%
 %project_dir = [fileparts(pwd) '/']; % change for github?
 project_dir = '../';
-LEiDA_directory = [project_dir 'leida-matlab-1.0_YA_normal_sleep/'];
+LEiDA_directory = [project_dir 'leida-matlab-1.0_YA_deprived_sleep/'];
 run_name = 'SleepyBrain_TVB_SchaeferTian_220';
 Parcellation = 'TVBSchaeferTian220';
 Conditions_tag = {'deprived_sleep','normal_sleep'};
@@ -32,12 +32,12 @@ old_subs = readlines(old_subjects_file,"EmptyLineRule","skip");
 old_subs_n = size(old_subs);
 
 young_subs_names = [];
-% for s=1:young_subs_n
-%     young_subs_names = [young_subs_names; strcat(young_subs(s), '_', Conditions_tag(1),'.txt' )];
-% end
 for s=1:young_subs_n
-    young_subs_names = [young_subs_names; strcat(young_subs(s), '_', Conditions_tag(2),'.txt' )];
+    young_subs_names = [young_subs_names; strcat(young_subs(s), '_', Conditions_tag(1),'.txt' )];
 end
+% for s=1:young_subs_n
+%     young_subs_names = [young_subs_names; strcat(young_subs(s), '_', Conditions_tag(2),'.txt' )];
+% end
 
 % old_subs_names = [];
 % for s=1:old_subs_n
