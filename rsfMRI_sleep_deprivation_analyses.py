@@ -88,6 +88,10 @@ NBS_OUTPUT_DIR = Path('outputs/NBS')
 NBS_OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
 NBS_BNV_EDGE_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts.edge')
 NBS_BNV_NODE_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts.node')
+NBS_BNV_EDGE_T2_5_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts_t2_5.edge')
+NBS_BNV_NODE_T2_5_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts_t2_5.node')
+NBS_BNV_EDGE_T2_9_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts_t2_9.edge')
+NBS_BNV_NODE_T2_9_OUTPUT_FILE = NBS_OUTPUT_DIR.joinpath('YA_vs_OA_sleep_diff_NBS_ts_t2_9.node')
 
 LEIDA_RESULTS_DIR = Path(f'leida-matlab-1.0/res_SleepyBrain_TVB_SchaeferTian_{ATLAS}')
 LEIDA_CLUSTERS_FILE = LEIDA_RESULTS_DIR.joinpath('LEiDA_Clusters.mat')
@@ -259,12 +263,6 @@ def nbs(group1_mat,group2_mat,t_thresh,perms=5000):
     return largest_subgraph_ind_t_mat, p
 
 #%%
-t_thresh = 2.7
-# t=2.7 corresponds to p=.01 for df=40
-#%% I flip the sign of the connections when making figures so that it instead represents old - young for consistency with PLS analyses
-component, p = nbs(young_FC_sleep_diff, old_FC_sleep_diff,t_thresh,5000) #sig
-
-#%%
 def save_BNV_node(output_file,degree_array,friendly_names_file):
     bn_node = pd.read_csv(friendly_names_file,names=['x','y','z','colour','size','label'],sep='\t')
     #mask = ~np.isnan(degree_array)
@@ -275,6 +273,12 @@ def save_BNV_node(output_file,degree_array,friendly_names_file):
 
 def save_BNV_edge(matrix,output_path):
     np.savetxt(output_path, matrix, delimiter='\t', fmt='%f')
+
+#%% NBS t 2.7
+t_thresh = 2.7
+# t=2.7 corresponds to p=.01 for df=40
+#%% I flip the sign of the connections when making figures so that it instead represents old - young for consistency with PLS analyses
+component, p = nbs(young_FC_sleep_diff, old_FC_sleep_diff,t_thresh,5000) #sig
 
 #%%
 component_bin = bin_pos_neg(component,thresh=t_thresh)
@@ -295,6 +299,96 @@ component_pos = np.zeros_like(component)
 component_pos[np.where(component>t_thresh)] = component[np.where(component>t_thresh)]
 save_BNV_edge(component_neg,NBS_BNV_EDGE_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_OUTPUT_FILE.stem}_neg{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
 save_BNV_edge(component_pos,NBS_BNV_EDGE_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_OUTPUT_FILE.stem}_pos{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
+
+component_bin = bin_pos_neg(component,thresh=t_thresh)
+component_total_n = np.sum(component_bin) / 2
+component_lh_n = np.sum(component_bin[:110,:110]) / 2
+component_rh_n = np.sum(component_bin[110:,110:]) / 2
+component_xh_n = component_total_n - component_lh_n - component_rh_n
+print('NBS connections',component_total_n)
+print('NBS LH',component_lh_n,component_lh_n/component_total_n * 100,'%')
+print('NBS RH',component_rh_n,component_rh_n/component_total_n * 100,'%')
+print('NBS interhemi',component_xh_n,component_xh_n/component_total_n * 100,'%')
+
+component_G = nx.from_numpy_matrix(component_bin)
+subgraphs = list(nx.connected_components(component_G))
+subgraph_sizes = [len(sg) for sg in subgraphs]
+print('component size:',np.max(subgraph_sizes))
+
+print('positive (neg in figure) connections:',np.where(component_pos>t_thresh)[0].shape[0] / 2)
+print('negative (pos in figure) connections:',np.where(component_neg<-1*t_thresh)[0].shape[0] / 2)
+
+print('sig node degree thresh',np.mean(component_degree) + 2.5*np.std(component_degree))
+
+#%% NBS t 2.5
+t_thresh = 2.5
+#%% I flip the sign of the connections when making figures so that it instead represents old - young for consistency with PLS analyses
+component, p = nbs(young_FC_sleep_diff, old_FC_sleep_diff,t_thresh,5000) #sig
+
+#%%
+component_bin = bin_pos_neg(component,thresh=t_thresh)
+component_degree = np.sum(component_bin,axis=0)
+#%%
+save_BNV_node(NBS_BNV_NODE_T2_5_OUTPUT_FILE,component_degree,ATLAS_FRIENDLY_NAMES_FILE)
+save_BNV_edge(component,NBS_BNV_EDGE_T2_5_OUTPUT_FILE)
+
+#%%
+#saving positive and negative components separately for visualization.
+#note also that I will color the BNV figures in reverse to show neg as pos and pos as neg
+#in order to effectively switch the sign of the t values. This will produce an NBS comparing
+#old - young, in order to be consistant with PLS interaction
+component = np.genfromtxt(NBS_BNV_EDGE_T2_5_OUTPUT_FILE,delimiter='\t')
+component_neg = np.zeros_like(component)
+component_neg[np.where(component<-1*t_thresh)] = component[np.where(component<-1*t_thresh)]
+component_pos = np.zeros_like(component)
+component_pos[np.where(component>t_thresh)] = component[np.where(component>t_thresh)]
+save_BNV_edge(component_neg,NBS_BNV_EDGE_T2_5_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_T2_5_OUTPUT_FILE.stem}_neg{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
+save_BNV_edge(component_pos,NBS_BNV_EDGE_T2_5_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_T2_5_OUTPUT_FILE.stem}_pos{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
+
+component_bin = bin_pos_neg(component,thresh=t_thresh)
+component_total_n = np.sum(component_bin) / 2
+component_lh_n = np.sum(component_bin[:110,:110]) / 2
+component_rh_n = np.sum(component_bin[110:,110:]) / 2
+component_xh_n = component_total_n - component_lh_n - component_rh_n
+print('NBS connections',component_total_n)
+print('NBS LH',component_lh_n,component_lh_n/component_total_n * 100,'%')
+print('NBS RH',component_rh_n,component_rh_n/component_total_n * 100,'%')
+print('NBS interhemi',component_xh_n,component_xh_n/component_total_n * 100,'%')
+
+component_G = nx.from_numpy_matrix(component_bin)
+subgraphs = list(nx.connected_components(component_G))
+subgraph_sizes = [len(sg) for sg in subgraphs]
+print('component size:',np.max(subgraph_sizes))
+
+print('positive (neg in figure) connections:',np.where(component_pos>t_thresh)[0].shape[0] / 2)
+print('negative (pos in figure) connections:',np.where(component_neg<-1*t_thresh)[0].shape[0] / 2)
+
+print('sig node degree thresh',np.mean(component_degree) + 2.5*np.std(component_degree))
+
+#%% NBS t 2.9
+t_thresh = 2.9
+#%% I flip the sign of the connections when making figures so that it instead represents old - young for consistency with PLS analyses
+component, p = nbs(young_FC_sleep_diff, old_FC_sleep_diff,t_thresh,5000) #sig
+
+#%%
+component_bin = bin_pos_neg(component,thresh=t_thresh)
+component_degree = np.sum(component_bin,axis=0)
+#%%
+save_BNV_node(NBS_BNV_NODE_T2_9_OUTPUT_FILE,component_degree,ATLAS_FRIENDLY_NAMES_FILE)
+save_BNV_edge(component,NBS_BNV_EDGE_T2_9_OUTPUT_FILE)
+
+#%%
+#saving positive and negative components separately for visualization.
+#note also that I will color the BNV figures in reverse to show neg as pos and pos as neg
+#in order to effectively switch the sign of the t values. This will produce an NBS comparing
+#old - young, in order to be consistant with PLS interaction
+component = np.genfromtxt(NBS_BNV_EDGE_T2_9_OUTPUT_FILE,delimiter='\t')
+component_neg = np.zeros_like(component)
+component_neg[np.where(component<-1*t_thresh)] = component[np.where(component<-1*t_thresh)]
+component_pos = np.zeros_like(component)
+component_pos[np.where(component>t_thresh)] = component[np.where(component>t_thresh)]
+save_BNV_edge(component_neg,NBS_BNV_EDGE_T2_9_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_T2_9_OUTPUT_FILE.stem}_neg{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
+save_BNV_edge(component_pos,NBS_BNV_EDGE_T2_9_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_T2_9_OUTPUT_FILE.stem}_pos{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
 
 component_bin = bin_pos_neg(component,thresh=t_thresh)
 component_total_n = np.sum(component_bin) / 2
@@ -920,6 +1014,316 @@ mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 analysis_name = 'young_deprived_vs_normal_sleep'
 mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
 mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
+os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
+
+mdmr_img = nib.load(mdmr_nifti_file_2mm)
+# mdmr_affine = mdmr_img.affine
+# mdmr_data = mdmr_img.get_fdata()
+# mdmr_05_min_p = np.zeros_like(mdmr_data)
+# mdmr_05_min_p[np.where(mdmr_data > 0)] = 0.05 - mdmr_data[np.where(mdmr_data > 0)]
+# mdmr_05_min_p_img = nib.Nifti1Image(mdmr_05_min_p,mdmr_affine)
+mdmr_img_2_fsaverage_surf = transforms.mni152_to_fsaverage(mdmr_img,fsavg_density='10k',method='nearest')
+mdmr_gifti_file_fsaverage_LH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH.gii.gz')
+mdmr_gifti_file_fsaverage_RH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH.gii.gz')
+nib.save(mdmr_img_2_fsaverage_surf[0],mdmr_gifti_file_fsaverage_LH)
+nib.save(mdmr_img_2_fsaverage_surf[1],mdmr_gifti_file_fsaverage_RH)
+
+#%%
+def custom_nonzero_mean(vertices):
+    """ignoring adjacent 0 values as these would decrease the pvalue to an artificially
+    low level
+    """
+    sum = 0.0
+    n = 0.0
+    for v in vertices:
+        if v > 0.0:
+            sum += v
+            n += 1.0
+    mean = 0.0 if n==0.0 else sum / n
+    
+    return mean
+    
+
+fsaverage = datasets.fetch_surf_fsaverage(mesh='fsaverage5')
+
+cmap_colours = [(.886,.761,.133),(.847,.631,.031),(.922,.0,.02)][::-1]
+cmap = LinearSegmentedColormap.from_list('greyscale', cmap_colours,N=100)
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                            mdmr_gifti_file_fsaverage_LH,
+                            bg_map=fsaverage['sulc_left'],
+                            view='medial',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=.0000001,
+                            hemi='left',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_medial.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                            mdmr_gifti_file_fsaverage_LH,
+                            bg_map=fsaverage['sulc_left'],
+                            view='lateral',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=.0000001,
+                            hemi='left',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_lateral.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                            mdmr_gifti_file_fsaverage_RH,bg_map=fsaverage['sulc_right'],
+                            view='medial',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=0.0000001,
+                            hemi='right',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_medial.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                            mdmr_gifti_file_fsaverage_RH,
+                            bg_map=fsaverage['sulc_right'],
+                            view='lateral',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=0.0000001,
+                            hemi='right',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_lateral.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%MDMR 750 cluster perms
+with open(GM_IDX_FILE,'rb') as f:
+    GM_idx = pickle.load(f)
+with open(EPI_AFFINE_FILE,'rb') as f:
+    epi_affine = pickle.load(f)
+
+perms = 15000
+cluster_perms = 750
+pthresh = .05
+
+#%% load voxelwise connectivity in memory map mode (each is 2.4GB)
+young_old_subjects_deprived_sleep_voxelwise_FC_dict = {}
+young_old_subjects_normal_sleep_voxelwise_FC_dict = {}
+
+subjects_young_old = young_subjects + old_subjects
+
+for sub in subjects_young_old:
+    young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_deprived_sleep_sub-{sub}.npy'),mmap_mode='r')
+    young_old_subjects_normal_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_normal_sleep_sub-{sub}.npy'),mmap_mode='r')
+
+#%% deprived vs normal sleep young
+young_subjects_deprived_sleep_voxelwise_FC_list = []
+young_subjects_normal_sleep_voxelwise_FC_list = []
+for sub in young_subjects:
+    young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
+    young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
+young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
+
+voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
+matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
+sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
+for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+    for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+        if j > i:
+            print('mat1',i,'mat2',j)
+            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
+            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
+
+np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix_perms_750.npy'),sub_dist_mat)
+
+#%%
+sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
+group_contrast = [1.0 if i < len(young_subjects) else -1.0 for i in range(2*len(young_subjects))]
+analysis_name = 'young_deprived_vs_normal_sleep_perms_750'
+
+mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
+
+#%%
+analysis_name = 'young_deprived_vs_normal_sleep_perms_750'
+mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_perms_750.nii.gz')
+mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_perms_750.nii.gz')
+os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
+
+mdmr_img = nib.load(mdmr_nifti_file_2mm)
+# mdmr_affine = mdmr_img.affine
+# mdmr_data = mdmr_img.get_fdata()
+# mdmr_05_min_p = np.zeros_like(mdmr_data)
+# mdmr_05_min_p[np.where(mdmr_data > 0)] = 0.05 - mdmr_data[np.where(mdmr_data > 0)]
+# mdmr_05_min_p_img = nib.Nifti1Image(mdmr_05_min_p,mdmr_affine)
+mdmr_img_2_fsaverage_surf = transforms.mni152_to_fsaverage(mdmr_img,fsavg_density='10k',method='nearest')
+mdmr_gifti_file_fsaverage_LH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH.gii.gz')
+mdmr_gifti_file_fsaverage_RH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH.gii.gz')
+nib.save(mdmr_img_2_fsaverage_surf[0],mdmr_gifti_file_fsaverage_LH)
+nib.save(mdmr_img_2_fsaverage_surf[1],mdmr_gifti_file_fsaverage_RH)
+
+#%%
+def custom_nonzero_mean(vertices):
+    """ignoring adjacent 0 values as these would decrease the pvalue to an artificially
+    low level
+    """
+    sum = 0.0
+    n = 0.0
+    for v in vertices:
+        if v > 0.0:
+            sum += v
+            n += 1.0
+    mean = 0.0 if n==0.0 else sum / n
+    
+    return mean
+    
+
+fsaverage = datasets.fetch_surf_fsaverage(mesh='fsaverage5')
+
+cmap_colours = [(.886,.761,.133),(.847,.631,.031),(.922,.0,.02)][::-1]
+cmap = LinearSegmentedColormap.from_list('greyscale', cmap_colours,N=100)
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                            mdmr_gifti_file_fsaverage_LH,
+                            bg_map=fsaverage['sulc_left'],
+                            view='medial',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=.0000001,
+                            hemi='left',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_medial.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                            mdmr_gifti_file_fsaverage_LH,
+                            bg_map=fsaverage['sulc_left'],
+                            view='lateral',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=.0000001,
+                            hemi='left',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_lateral.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                            mdmr_gifti_file_fsaverage_RH,bg_map=fsaverage['sulc_right'],
+                            view='medial',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=0.0000001,
+                            hemi='right',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_medial.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%
+fig = plt.figure(figsize=(30, 30))
+plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                            mdmr_gifti_file_fsaverage_RH,
+                            bg_map=fsaverage['sulc_right'],
+                            view='lateral',
+                            bg_on_data=True,
+                            cmap=cmap,
+                            threshold=0.0000001,
+                            hemi='right',
+                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_lateral.png'),
+                            figure=fig,
+                            vmax=.05,
+                            symmetric_cbar=False,
+                            avg_method=custom_nonzero_mean,
+                            darkness = 1.2,
+                            )
+
+#%%MDMR 1000 cluster perms
+with open(GM_IDX_FILE,'rb') as f:
+    GM_idx = pickle.load(f)
+with open(EPI_AFFINE_FILE,'rb') as f:
+    epi_affine = pickle.load(f)
+
+perms = 15000
+cluster_perms = 1000
+pthresh = .05
+
+#%% load voxelwise connectivity in memory map mode (each is 2.4GB)
+young_old_subjects_deprived_sleep_voxelwise_FC_dict = {}
+young_old_subjects_normal_sleep_voxelwise_FC_dict = {}
+
+subjects_young_old = young_subjects + old_subjects
+
+for sub in subjects_young_old:
+    young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_deprived_sleep_sub-{sub}.npy'),mmap_mode='r')
+    young_old_subjects_normal_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_normal_sleep_sub-{sub}.npy'),mmap_mode='r')
+
+#%% deprived vs normal sleep young
+young_subjects_deprived_sleep_voxelwise_FC_list = []
+young_subjects_normal_sleep_voxelwise_FC_list = []
+for sub in young_subjects:
+    young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
+    young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
+young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
+
+voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
+matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
+sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
+for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+    for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+        if j > i:
+            print('mat1',i,'mat2',j)
+            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
+            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
+
+np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix_perms_1000.npy'),sub_dist_mat)
+
+#%%
+sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
+group_contrast = [1.0 if i < len(young_subjects) else -1.0 for i in range(2*len(young_subjects))]
+analysis_name = 'young_deprived_vs_normal_sleep_perms_1000'
+
+mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
+
+#%%
+analysis_name = 'young_deprived_vs_normal_sleep_perms_1000'
+mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_perms_1000.nii.gz')
+mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_perms_1000.nii.gz')
 os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
 
 mdmr_img = nib.load(mdmr_nifti_file_2mm)
