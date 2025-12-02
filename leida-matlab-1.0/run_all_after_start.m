@@ -1,5 +1,6 @@
 %%
-project_dir = [fileparts(pwd) '/'];
+%project_dir = [fileparts(pwd) '/']; %restore for github
+project_dir = [pwd '/'];
 LEiDA_directory = [project_dir 'leida-matlab-1.0/'];
 run_name = 'SleepyBrain_TVB_SchaeferTian_220';
 Parcellation = 'TVBSchaeferTian220';
@@ -13,9 +14,9 @@ young_female_subjects_file = [project_dir 'data/data_processing/behav/good_subje
 young_male_subjects_file = [project_dir 'data/data_processing/behav/good_subjects_YA_male.txt']; 
 old_female_subjects_file = [project_dir 'data/data_processing/behav/good_subjects_OA_female.txt']; 
 old_male_subjects_file = [project_dir 'data/data_processing/behav/good_subjects_OA_male.txt']; 
+SelectK=5;
 
 %%
-SelectK = 5;
 LEiDA_AnalysisK(LEiDA_directory, run_name, SelectK, Parcellation)
 LEiDA_AnalysisCentroid(LEiDA_directory, run_name, SelectK, Parcellation)
 %%
@@ -47,9 +48,11 @@ end
 
 load([LEiDA_directory 'res_' run_name '/LEiDA_EigenVectors.mat'],'Data_info','idx_data');
 load([LEiDA_directory 'res_' run_name '/LEiDA_Stats_FracOccup.mat'],'P');
+load([LEiDA_directory 'res_' run_name '/LEiDA_Stats_DwellTime.mat'],'LT');
 load([LEiDA_directory 'res_' run_name '/K' num2str(SelectK) '/LEiDA_Stats_TransitionMatrix.mat'],'TMnorm');
 
 FO_files_YA = {};
+DT_files_YA = {};
 TM_files_YA = {};
 for subj_idx = 1:young_subs_n*2
     subj = young_subs_names(subj_idx);
@@ -60,6 +63,11 @@ for subj_idx = 1:young_subs_n*2
             FO_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_FO_', subj{1}(1:end-4), '.csv');
             writematrix(FO, FO_filename)  
             FO_files_YA{subj_idx} = FO_filename;
+
+            DT = LT(s,SelectK-1,1:SelectK);
+            DT_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_DT_', subj{1}(1:end-4), '.csv');
+            writematrix(DT, DT_filename)  
+            DT_files_YA{subj_idx} = DT_filename;
     
             TM = TMnorm(s,:,:);
             TM_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_TM_', subj{1}(1:end-4), '.csv');
@@ -70,18 +78,22 @@ for subj_idx = 1:young_subs_n*2
 end
 
 FO_YA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_FO_YA_files.txt');
+DT_YA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_DT_YA_files.txt');
 TM_YA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_TM_YA_files.txt');
 for subj_idx = 1:young_subs_n*2
     if subj_idx == 1
         writelines(FO_files_YA{subj_idx},FO_YA_PLS_filenames_file);
+        writelines(DT_files_YA{subj_idx},DT_YA_PLS_filenames_file);
         writelines(TM_files_YA{subj_idx},TM_YA_PLS_filenames_file);
     else
         writelines(FO_files_YA{subj_idx},FO_YA_PLS_filenames_file,WriteMode='append');
+        writelines(DT_files_YA{subj_idx},DT_YA_PLS_filenames_file,WriteMode='append');
         writelines(TM_files_YA{subj_idx},TM_YA_PLS_filenames_file,WriteMode='append');
     end
 end
 
 FO_files_OA = {};
+DT_files_OA = {};
 TM_files_OA = {};
 for subj_idx = 1:old_subs_n*2
     subj = old_subs_names(subj_idx);
@@ -92,7 +104,12 @@ for subj_idx = 1:old_subs_n*2
             FO_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_FO_', subj{1}(1:end-4), '.csv');
             writematrix(FO, FO_filename)  
             FO_files_OA{subj_idx} = FO_filename;
-    
+
+            DT = LT(s,SelectK-1,1:SelectK);
+            DT_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_DT_', subj{1}(1:end-4), '.csv');
+            writematrix(DT, DT_filename)  
+            DT_files_OA{subj_idx} = DT_filename;
+
             TM = TMnorm(s,:,:);
             TM_filename = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_TM_', subj{1}(1:end-4), '.csv');
             writematrix(TM, TM_filename)
@@ -102,13 +119,16 @@ for subj_idx = 1:old_subs_n*2
 end
 
 FO_OA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_FO_OA_files.txt');
+DT_OA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_DT_OA_files.txt');
 TM_OA_PLS_filenames_file = strcat(LEiDA_directory, 'res_', run_name, '/K', num2str(SelectK), '/subject_data/', 'K', num2str(SelectK), '_TM_OA_files.txt');
 for subj_idx = 1:old_subs_n*2
     if subj_idx == 1
         writelines(FO_files_OA{subj_idx},FO_OA_PLS_filenames_file);
+        writelines(DT_files_OA{subj_idx},DT_OA_PLS_filenames_file);
         writelines(TM_files_OA{subj_idx},TM_OA_PLS_filenames_file);
     else
         writelines(FO_files_OA{subj_idx},FO_OA_PLS_filenames_file,WriteMode='append');
+        writelines(DT_files_OA{subj_idx},DT_OA_PLS_filenames_file,WriteMode='append');
         writelines(TM_files_OA{subj_idx},TM_OA_PLS_filenames_file,WriteMode='append');
     end
 end

@@ -142,7 +142,7 @@ ggplot(FC_usc_df_means,aes(x=cond,FO_global)) +
   scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
   ylab('Global Coherence State FO') + xlab('Group (Sleep Condition)') + guides(fill = 'none') +
   theme_classic() +
-  theme(text = element_text(size=20), panel.border = element_blank(), panel.grib = element_blank())+
+  theme(text = element_text(size=20), panel.border = element_blank(), panel.grid = element_blank())+
   scale_y_continuous(expand=c(0,0)) # removes gap between 0 and y axis line
 
 ggsave(FO_mean_plot_file)
@@ -240,3 +240,69 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   theme_classic() +
   theme(text = element_text(size=20), axis.text.x = element_text(angle = 45, vjust = 1,hjust=1,size=12))
 ggsave(FC_usc_plot_file)
+
+#LEiDA DT
+# REPLACE THESE 3 LINES FOR GITHUB
+# FC_usc_file = here('outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_DT.csv')
+# FC_usc_plot_file = here('outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_DT_ggplot.png')
+# FO_mean_plot_file = here('outputs/PLS/mean_centred_PLS/leida_DT_global_ggplot.png')
+# REMOVE NEXT 3 LINES FOR GITHUB
+FC_usc_file = '/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_DT.csv'
+FC_usc_plot_file = '/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/outputs/PLS/mean_centred_PLS/mean_centred_PLS_lv1_usc_table_leida_DT_ggplot.png'
+DT_mean_plot_file = '/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/outputs/PLS/mean_centred_PLS/leida_DT_global_ggplot.png'
+FC_usc_df = read.csv(FC_usc_file,sep=',')
+FC_usc_df$sub = as.factor(FC_usc_df$sub)
+FC_usc_df$age = as.factor(FC_usc_df$age)
+FC_usc_df$sleep = as.factor(FC_usc_df$sleep)
+FC_usc_df$cond = paste(as.character(FC_usc_df$age) , as.character(FC_usc_df$sleep))
+FC_usc_df[FC_usc_df$cond == 'young deprived','cond'] = 'Young (Restricted)'
+FC_usc_df[FC_usc_df$cond == 'young normal','cond'] = 'Young (Normal)'
+FC_usc_df[FC_usc_df$cond == 'old deprived','cond'] = 'Old (Restricted)'
+FC_usc_df[FC_usc_df$cond == 'old normal','cond'] = 'Old (Normal)'
+FC_usc_df$cond = factor(FC_usc_df$cond, levels=c('Young (Restricted)','Young (Normal)','Old (Restricted)', 'Old (Normal)'))
+FC_usc_df$usc2 = as.numeric(FC_usc_df$usc2)
+FC_usc_df$orig_usc = as.numeric(FC_usc_df$orig_usc)
+FC_usc_df$ulusc = as.numeric(FC_usc_df$ulusc)
+FC_usc_df$llusc = as.numeric(FC_usc_df$llusc)
+FC_usc_df$DT_global = as.numeric(FC_usc_df$DT_global)
+
+#just getting this for sex variable
+#sex_df = read.csv(here('data/participants.tsv'),sep='\t') #REPLACE FOR GITHUB
+sex_df = read.csv('/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/data/participants.tsv',sep='\t') #REMOVE FOR GITHUB
+sex_df$sub = factor(substr(sex_df$participant_id, 5,8))
+sex_df$sex = factor(sex_df$Sex)
+sex_df = sex_df[,c('sub','sex')]
+
+merged_df = merge(sex_df,FC_usc_df)
+
+# All values same, from matlab. Using mean function but equivalent to just grabbing 1 value.
+FC_usc_df_means = aggregate(cbind(orig_usc,llusc,ulusc,DT_global) ~ age + sleep,x=FC_usc_df,FUN='mean')
+FC_usc_df_means$cond = paste(as.character(FC_usc_df_means$age) , as.character(FC_usc_df_means$sleep))
+FC_usc_df_means[FC_usc_df_means$cond == 'young deprived','cond'] = 'Young (Restricted)'
+FC_usc_df_means[FC_usc_df_means$cond == 'young normal','cond'] = 'Young (Normal)'
+FC_usc_df_means[FC_usc_df_means$cond == 'old deprived','cond'] = 'Old (Restricted)'
+FC_usc_df_means[FC_usc_df_means$cond == 'old normal','cond'] = 'Old (Normal)'
+FC_usc_df_means$cond = factor(FC_usc_df_means$cond, levels=c('Young (Restricted)','Young (Normal)','Old (Restricted)', 'Old (Normal)'))
+FC_usc_df_ci = aggregate(usc2~age+sleep,x=FC_usc_df,FUN=sd)
+ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) + 
+  geom_col(aes(fill=cond), linetype = 'solid', colour = 'black', linewidth = 0.25) +
+  scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
+  geom_errorbar(aes(ymin=llusc,ymax=ulusc),width=.1) +
+  geom_point(data=merged_df, aes(group=cond, y = usc2, shape=sex),  colour='black',alpha=.25) +
+  geom_line(data=merged_df, aes(y = usc2, group=sub,linetype=sex),alpha=.5) +
+  geom_hline(yintercept=0,colour='#444444') +
+  ylab('Brain Score') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + labs(linetype='Sex',shape='Sex') +
+  theme_classic() +
+  theme(text = element_text(size=20))
+ggsave(FC_usc_plot_file)
+
+# Global FO mean plot
+ggplot(FC_usc_df_means,aes(x=cond,DT_global)) + 
+  geom_col(aes(fill=cond), linetype = 'solid', colour = 'black', linewidth = 0.25) +
+  scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
+  ylab('Global Coherence State DT') + xlab('Group (Sleep Condition)') + guides(fill = 'none') +
+  theme_classic() +
+  theme(text = element_text(size=20), panel.border = element_blank(), panel.grid = element_blank())+
+  scale_y_continuous(expand=c(0,0)) # removes gap between 0 and y axis line
+
+ggsave(DT_mean_plot_file)

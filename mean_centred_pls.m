@@ -1527,3 +1527,159 @@ set(gca, 'XTick', 1:size(result.v(:,lv),1), 'XTickLabel', xticklabels, 'FontSize
 print(fullfile(outputs_dir, usc_fig_filename), '-dpng', '-r600');
 
 hold off
+
+%% LEiDA Dwell Time (DT)
+young_subs_files = readlines([LEiDA_dir '/K5_DT_YA_files.txt'],"EmptyLineRule","skip");
+old_subs_files = readlines([LEiDA_dir '/K5_DT_OA_files.txt'],"EmptyLineRule","skip");
+
+bsr_filename = 'mean_centred_PLS_lv1_bsr_2.0thresh_leida_DT.csv';
+usc_fig_filename = 'mean_centred_PLS_lv1_usc_leida_DT.png';
+usc_table_filename = 'mean_centred_PLS_lv1_usc_table_leida_DT.csv';
+results_filename = 'mean_centred_PLS_leida_DT_result.mat';
+
+young_subs_DT = [];
+for s=1:length(young_subs_files)
+    DT = load([young_subs_files{s}]);
+    young_subs_DT = [young_subs_DT; DT];
+end
+
+old_subs_DT = [];
+for s=1:length(old_subs_files)
+    DT = load([old_subs_files{s}]);
+    old_subs_DT = [old_subs_DT; DT];
+end
+
+%%
+datamat_lst = {};
+datamat_lst{1} = young_subs_DT; %this should have deprived and normal sleep conditions concatenated (all subs deprived then all subs normal)
+datamat_lst{2} = old_subs_DT;
+
+num_subj = [23 19];
+num_cond = 2;
+option.method = 1;
+option.num_boot = 1000;
+option.num_perm = 1000;
+option.meancentering_type = 0;
+
+result = pls_analysis(datamat_lst, num_subj, num_cond, option);
+
+save(fullfile(outputs_dir,results_filename),'result')
+
+%%
+lv=1;
+thresh=2;
+bsr = result.boot_result.compare_u(:,lv);
+%sig_bsr_idx = bsr > thresh | bsr < (-1*thresh);
+
+%sig_bsr = zeros(size(bsr));
+%sig_bsr(sig_bsr_idx) = bsr(sig_bsr_idx);
+
+csvwrite(fullfile(outputs_dir, bsr_filename),bsr);
+
+%%
+fig = figure('Units','inches','Position',[0,0,10,10]);
+barColors = [0.8 0.2 0.4;0.4 0.7 0.9];
+data = result.boot_result.orig_usc(:,lv);
+x = 1:numel(data);
+bar(x(1:2), data(1:2),'FaceColor',barColors(1,:));
+hold on;
+bar(x(3:4),data(3:4),'FaceColor',barColors(2,:));
+%ylim([-1,1]);
+
+lower=result.boot_result.orig_usc(:,lv) - result.boot_result.llusc(:,lv);
+upper=result.boot_result.ulusc(:,lv) - result.boot_result.orig_usc(:,lv);
+er = errorbar(x,data,lower,upper);
+
+er.Color = [0 0 0];
+er.LineStyle = 'none';
+er.LineWidth = 0.2;
+
+axisLabelFontSize = 12;
+titleFontSize = 7;
+xlabel('Groups (Conditions)','FontWeight','bold','FontSize',axisLabelFontSize);
+ylabel('Brain Score','FontWeight','bold','FontSize',axisLabelFontSize);
+title(['LV=' num2str(lv) ', p=' num2str(result.perm_result.sprob(lv))], 'FontSize',titleFontSize);
+
+xticklabels = {'YA (Deprived)'; 'YA (Normal)'; 'OA (Deprived)'; 'OA (Normal)'};
+set(gca, 'XTick', 1:size(result.v(:,lv),1), 'XTickLabel', xticklabels, 'FontSize', axisLabelFontSize, 'LineWidth', 0.3);
+
+print(fullfile(outputs_dir, usc_fig_filename), '-dpng', '-r600');
+
+hold off
+
+%% usc table for fig in R
+lv=1;
+load(fullfile(outputs_dir,results_filename),'result');
+
+young_subs_files_size = size(young_subs_files);
+young_subs_n = cast(young_subs_files_size(1) / 2,'uint8');
+young_subs = zeros(young_subs_n,1);
+for s=1:young_subs_n
+    filename = strsplit(young_subs_files(s),'/');
+    filename_end = filename(end);
+    young_subs_str = extractBetween(filename_end,7,10);
+    young_subs(s) = str2num(young_subs_str);
+end
+old_subs_files_size = size(old_subs_files);
+old_subs_n = cast(old_subs_files_size(1) / 2,'uint8');
+old_subs = zeros(old_subs_n,1);
+for s=1:old_subs_n
+    filename = strsplit(old_subs_files(s),'/');
+    filename_end = filename(end);
+    old_subs_str = extractBetween(filename_end,7,10);
+    old_subs(s) = str2num(old_subs_str);
+end
+
+usc2 = result.boot_result.usc2;
+usc_table = table(usc2(:,lv));
+usc_table.usc2 = usc_table.Var1;
+usc_table = removevars(usc_table,'Var1');
+usc_table.sub = cat(1,young_subs,young_subs,old_subs,old_subs);
+age = strings(young_subs_n*2 + old_subs_n*2,1);
+sleep = strings(young_subs_n*2 + old_subs_n*2,1);
+orig_usc = zeros(young_subs_n*2 + old_subs_n*2,1);
+ulusc = zeros(young_subs_n*2 + old_subs_n*2,1);
+llusc = zeros(young_subs_n*2 + old_subs_n*2,1);
+DT_global = zeros(young_subs_n*2 + old_subs_n*2,1);
+for i=1:young_subs_n
+    age(i) = 'young';
+    sleep(i) = 'deprived';
+    orig_usc(i) = result.boot_result.orig_usc(1,lv);
+    ulusc(i) = result.boot_result.ulusc(1,lv);
+    llusc(i) = result.boot_result.llusc(1,lv);
+    DT_global(i) = young_subs_DT(i,1);
+end
+for i=young_subs_n+1:young_subs_n*2
+    age(i) = 'young';
+    sleep(i) = 'normal';
+    orig_usc(i) = result.boot_result.orig_usc(2,lv);
+    ulusc(i) = result.boot_result.ulusc(2,lv);
+    llusc(i) = result.boot_result.llusc(2,lv);
+    DT_global(i) = young_subs_DT(i,1);
+end
+for i=young_subs_n*2+1:young_subs_n*2+old_subs_n
+    age(i) = 'old';
+    sleep(i) = 'deprived';
+    orig_usc(i) = result.boot_result.orig_usc(3,lv);
+    ulusc(i) = result.boot_result.ulusc(3,lv);
+    llusc(i) = result.boot_result.llusc(3,lv);
+    j = i - young_subs_n*2;
+    DT_global(i) = old_subs_DT(j,1);
+end
+for i=young_subs_n*2+old_subs_n+1:young_subs_n*2+old_subs_n*2
+    age(i) = 'old';
+    sleep(i) = 'normal';
+    orig_usc(i) = result.boot_result.orig_usc(4,lv);
+    ulusc(i) = result.boot_result.ulusc(4,lv);
+    llusc(i) = result.boot_result.llusc(4,lv);
+    j = i - young_subs_n*2;
+    DT_global(i) = old_subs_DT(j,1);
+end
+usc_table.age = age;
+usc_table.sleep = sleep;
+usc_table.orig_usc = orig_usc;
+usc_table.ulusc = ulusc;
+usc_table.llusc = llusc;
+usc_table.DT_global = DT_global;
+
+writetable(usc_table,fullfile(outputs_dir, usc_table_filename));
