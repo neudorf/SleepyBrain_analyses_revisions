@@ -949,84 +949,92 @@ for i, s1 in enumerate(subjects_young_old):
 
 np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_diff_sleep_dist_matrix.npy'),sub_dist_mat)
 
-#%%
-sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_diff_sleep_dist_matrix.npy'))
-group_contrast = [1.0 if sub in young_subjects else -1.0 for sub in subjects_young_old]
-analysis_name = 'diff_sleep'
+#%% put back for github
+if False:
+    sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_diff_sleep_dist_matrix.npy'))
+    group_contrast = [1.0 if sub in young_subjects else -1.0 for sub in subjects_young_old]
+    analysis_name = 'diff_sleep'
 
-mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
+    mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 
 #%% deprived vs normal sleep old
-old_subjects_deprived_sleep_voxelwise_FC_list = []
-old_subjects_normal_sleep_voxelwise_FC_list = []
-for sub in old_subjects:
-    old_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
-    old_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
-old_subjects_deprived_normal_sleep_voxelwise_FC_list = old_subjects_deprived_sleep_voxelwise_FC_list + old_subjects_normal_sleep_voxelwise_FC_list
+# put back for github
+if False:
+    old_subjects_deprived_sleep_voxelwise_FC_list = []
+    old_subjects_normal_sleep_voxelwise_FC_list = []
+    for sub in old_subjects:
+        old_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
+        old_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
+    old_subjects_deprived_normal_sleep_voxelwise_FC_list = old_subjects_deprived_sleep_voxelwise_FC_list + old_subjects_normal_sleep_voxelwise_FC_list
 
-voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
-matrices_n = len(old_subjects_deprived_normal_sleep_voxelwise_FC_list)
-sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
-for i, mat1 in enumerate(old_subjects_deprived_normal_sleep_voxelwise_FC_list):
-    for j, mat2 in enumerate(old_subjects_deprived_normal_sleep_voxelwise_FC_list):
-        if j > i:
-            print('mat1',i,'mat2',j)
-            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
-            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
+    voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
+    matrices_n = len(old_subjects_deprived_normal_sleep_voxelwise_FC_list)
+    sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
+    for i, mat1 in enumerate(old_subjects_deprived_normal_sleep_voxelwise_FC_list):
+        for j, mat2 in enumerate(old_subjects_deprived_normal_sleep_voxelwise_FC_list):
+            if j > i:
+                print('mat1',i,'mat2',j)
+                sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
+                sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
 
-np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_old_dist_matrix.npy'),sub_dist_mat)
+    np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_old_dist_matrix.npy'),sub_dist_mat)
 
-#%%
-sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_old_dist_matrix.npy'))
-group_contrast = [1.0 if i < len(old_subjects) else -1.0 for i in range(2*len(old_subjects))]
-analysis_name = 'old_deprived_vs_normal_sleep'
+#%% put back for github
+if False
+    sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_old_dist_matrix.npy'))
+    group_contrast = [1.0 if i < len(old_subjects) else -1.0 for i in range(2*len(old_subjects))]
+    analysis_name = 'old_deprived_vs_normal_sleep'
 
-mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
+    mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 
 #%% deprived vs normal sleep young
-young_subjects_deprived_sleep_voxelwise_FC_list = []
-young_subjects_normal_sleep_voxelwise_FC_list = []
-for sub in young_subjects:
-    young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
-    young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
-young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
+# put back for github
+if False:
+    young_subjects_deprived_sleep_voxelwise_FC_list = []
+    young_subjects_normal_sleep_voxelwise_FC_list = []
+    for sub in young_subjects:
+        young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
+        young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
+    young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
 
-voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
-matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
-sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
-for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-    for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-        if j > i:
-            print('mat1',i,'mat2',j)
-            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
-            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
+    voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
+    matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
+    sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
+    for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+        for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
+            if j > i:
+                print('mat1',i,'mat2',j)
+                sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
+                sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
 
-np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'),sub_dist_mat)
+    np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'),sub_dist_mat)
 
-#%%
-sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
-group_contrast = [1.0 if i < len(young_subjects) else -1.0 for i in range(2*len(young_subjects))]
-analysis_name = 'young_deprived_vs_normal_sleep'
+#%% put back for github
+if False
+    sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
+    group_contrast = [1.0 if i < len(young_subjects) else -1.0 for i in range(2*len(young_subjects))]
+    analysis_name = 'young_deprived_vs_normal_sleep'
 
-mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
+    mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 
-#%%
-analysis_name = 'young_deprived_vs_normal_sleep'
-mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
-mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
-os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
+#%% put back for github
+if False:
+    analysis_name = 'young_deprived_vs_normal_sleep'
+    mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
+    mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
+    os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
 
-mdmr_img = nib.load(mdmr_nifti_file_2mm)
-# mdmr_affine = mdmr_img.affine
-# mdmr_data = mdmr_img.get_fdata()
-# mdmr_05_min_p = np.zeros_like(mdmr_data)
-# mdmr_05_min_p[np.where(mdmr_data > 0)] = 0.05 - mdmr_data[np.where(mdmr_data > 0)]
-# mdmr_05_min_p_img = nib.Nifti1Image(mdmr_05_min_p,mdmr_affine)
-mdmr_img_2_fsaverage_surf = transforms.mni152_to_fsaverage(mdmr_img,fsavg_density='10k',method='nearest')
-mdmr_gifti_file_fsaverage_LH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH.gii.gz')
-mdmr_gifti_file_fsaverage_RH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH.gii.gz')
-nib.save(mdmr_img_2_fsaverage_surf[0],mdmr_gifti_file_fsaverage_LH)
-nib.save(mdmr_img_2_fsaverage_surf[1],mdmr_gifti_file_fsaverage_RH)
+    mdmr_img = nib.load(mdmr_nifti_file_2mm)
+    # mdmr_affine = mdmr_img.affine
+    # mdmr_data = mdmr_img.get_fdata()
+    # mdmr_05_min_p = np.zeros_like(mdmr_data)
+    # mdmr_05_min_p[np.where(mdmr_data > 0)] = 0.05 - mdmr_data[np.where(mdmr_data > 0)]
+    # mdmr_05_min_p_img = nib.Nifti1Image(mdmr_05_min_p,mdmr_affine)
+    mdmr_img_2_fsaverage_surf = transforms.mni152_to_fsaverage(mdmr_img,fsavg_density='10k',method='nearest')
+    mdmr_gifti_file_fsaverage_LH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH.gii.gz')
+    mdmr_gifti_file_fsaverage_RH = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH.gii.gz')
+    nib.save(mdmr_img_2_fsaverage_surf[0],mdmr_gifti_file_fsaverage_LH)
+    nib.save(mdmr_img_2_fsaverage_surf[1],mdmr_gifti_file_fsaverage_RH)
 
 #%%
 def custom_nonzero_mean(vertices):
@@ -1042,81 +1050,84 @@ def custom_nonzero_mean(vertices):
     mean = 0.0 if n==0.0 else sum / n
     
     return mean
-    
+# put back for github
+if False:
+    fsaverage = datasets.fetch_surf_fsaverage(mesh='fsaverage5')
 
-fsaverage = datasets.fetch_surf_fsaverage(mesh='fsaverage5')
+    cmap_colours = [(.886,.761,.133),(.847,.631,.031),(.922,.0,.02)][::-1]
+    cmap = LinearSegmentedColormap.from_list('greyscale', cmap_colours,N=100)
+    fig = plt.figure(figsize=(30, 30))
+    plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                                mdmr_gifti_file_fsaverage_LH,
+                                bg_map=fsaverage['sulc_left'],
+                                view='medial',
+                                bg_on_data=True,
+                                cmap=cmap,
+                                threshold=.0000001,
+                                hemi='left',
+                                output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_medial.png'),
+                                figure=fig,
+                                vmax=.05,
+                                symmetric_cbar=False,
+                                avg_method=custom_nonzero_mean,
+                                darkness = 1.2,
+                                )
 
-cmap_colours = [(.886,.761,.133),(.847,.631,.031),(.922,.0,.02)][::-1]
-cmap = LinearSegmentedColormap.from_list('greyscale', cmap_colours,N=100)
-fig = plt.figure(figsize=(30, 30))
-plotting.plot_surf_stat_map(fsaverage['pial_left'],
-                            mdmr_gifti_file_fsaverage_LH,
-                            bg_map=fsaverage['sulc_left'],
-                            view='medial',
-                            bg_on_data=True,
-                            cmap=cmap,
-                            threshold=.0000001,
-                            hemi='left',
-                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_medial.png'),
-                            figure=fig,
-                            vmax=.05,
-                            symmetric_cbar=False,
-                            avg_method=custom_nonzero_mean,
-                            darkness = 1.2,
-                            )
+#%% put back for github
+if False:
+    fig = plt.figure(figsize=(30, 30))
+    plotting.plot_surf_stat_map(fsaverage['pial_left'],
+                                mdmr_gifti_file_fsaverage_LH,
+                                bg_map=fsaverage['sulc_left'],
+                                view='lateral',
+                                bg_on_data=True,
+                                cmap=cmap,
+                                threshold=.0000001,
+                                hemi='left',
+                                output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_lateral.png'),
+                                figure=fig,
+                                vmax=.05,
+                                symmetric_cbar=False,
+                                avg_method=custom_nonzero_mean,
+                                darkness = 1.2,
+                                )
 
-#%%
-fig = plt.figure(figsize=(30, 30))
-plotting.plot_surf_stat_map(fsaverage['pial_left'],
-                            mdmr_gifti_file_fsaverage_LH,
-                            bg_map=fsaverage['sulc_left'],
-                            view='lateral',
-                            bg_on_data=True,
-                            cmap=cmap,
-                            threshold=.0000001,
-                            hemi='left',
-                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_LH_lateral.png'),
-                            figure=fig,
-                            vmax=.05,
-                            symmetric_cbar=False,
-                            avg_method=custom_nonzero_mean,
-                            darkness = 1.2,
-                            )
+#%% put back for github
+if False:
+    fig = plt.figure(figsize=(30, 30))
+    plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                                mdmr_gifti_file_fsaverage_RH,bg_map=fsaverage['sulc_right'],
+                                view='medial',
+                                bg_on_data=True,
+                                cmap=cmap,
+                                threshold=0.0000001,
+                                hemi='right',
+                                output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_medial.png'),
+                                figure=fig,
+                                vmax=.05,
+                                symmetric_cbar=False,
+                                avg_method=custom_nonzero_mean,
+                                darkness = 1.2,
+                                )
 
-#%%
-fig = plt.figure(figsize=(30, 30))
-plotting.plot_surf_stat_map(fsaverage['pial_right'],
-                            mdmr_gifti_file_fsaverage_RH,bg_map=fsaverage['sulc_right'],
-                            view='medial',
-                            bg_on_data=True,
-                            cmap=cmap,
-                            threshold=0.0000001,
-                            hemi='right',
-                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_medial.png'),
-                            figure=fig,
-                            vmax=.05,
-                            symmetric_cbar=False,
-                            avg_method=custom_nonzero_mean,
-                            darkness = 1.2,
-                            )
-
-#%%
-fig = plt.figure(figsize=(30, 30))
-plotting.plot_surf_stat_map(fsaverage['pial_right'],
-                            mdmr_gifti_file_fsaverage_RH,
-                            bg_map=fsaverage['sulc_right'],
-                            view='lateral',
-                            bg_on_data=True,
-                            cmap=cmap,
-                            threshold=0.0000001,
-                            hemi='right',
-                            output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_lateral.png'),
-                            figure=fig,
-                            vmax=.05,
-                            symmetric_cbar=False,
-                            avg_method=custom_nonzero_mean,
-                            darkness = 1.2,
-                            )
+#%% put back for github
+if False:
+    fig = plt.figure(figsize=(30, 30))
+    plotting.plot_surf_stat_map(fsaverage['pial_right'],
+                                mdmr_gifti_file_fsaverage_RH,
+                                bg_map=fsaverage['sulc_right'],
+                                view='lateral',
+                                bg_on_data=True,
+                                cmap=cmap,
+                                threshold=0.0000001,
+                                hemi='right',
+                                output_file=MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_RH_lateral.png'),
+                                figure=fig,
+                                vmax=.05,
+                                symmetric_cbar=False,
+                                avg_method=custom_nonzero_mean,
+                                darkness = 1.2,
+                                )
 
 #%%MDMR 750 cluster perms
 with open(GM_IDX_FILE,'rb') as f:
@@ -1137,26 +1148,6 @@ subjects_young_old = young_subjects + old_subjects
 for sub in subjects_young_old:
     young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_deprived_sleep_sub-{sub}.npy'),mmap_mode='r')
     young_old_subjects_normal_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_normal_sleep_sub-{sub}.npy'),mmap_mode='r')
-
-#%% deprived vs normal sleep young
-young_subjects_deprived_sleep_voxelwise_FC_list = []
-young_subjects_normal_sleep_voxelwise_FC_list = []
-for sub in young_subjects:
-    young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
-    young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
-young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
-
-voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
-matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
-sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
-for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-    for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-        if j > i:
-            print('mat1',i,'mat2',j)
-            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
-            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
-
-np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix_perms_750.npy'),sub_dist_mat)
 
 #%%
 sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
@@ -1292,26 +1283,6 @@ subjects_young_old = young_subjects + old_subjects
 for sub in subjects_young_old:
     young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_deprived_sleep_sub-{sub}.npy'),mmap_mode='r')
     young_old_subjects_normal_sleep_voxelwise_FC_dict[sub] = np.load(GM_VOXELWISE_FC_DIR.joinpath(f'GM_voxelwise_4mm_FC_normal_sleep_sub-{sub}.npy'),mmap_mode='r')
-
-#%% deprived vs normal sleep young
-young_subjects_deprived_sleep_voxelwise_FC_list = []
-young_subjects_normal_sleep_voxelwise_FC_list = []
-for sub in young_subjects:
-    young_subjects_deprived_sleep_voxelwise_FC_list.append(young_old_subjects_deprived_sleep_voxelwise_FC_dict[sub])
-    young_subjects_normal_sleep_voxelwise_FC_list.append(young_old_subjects_normal_sleep_voxelwise_FC_dict[sub])
-young_subjects_deprived_normal_sleep_voxelwise_FC_list = young_subjects_deprived_sleep_voxelwise_FC_list + young_subjects_normal_sleep_voxelwise_FC_list
-
-voxels_n = young_old_subjects_normal_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
-matrices_n = len(young_subjects_deprived_normal_sleep_voxelwise_FC_list)
-sub_dist_mat = np.zeros((voxels_n,matrices_n,matrices_n))
-for i, mat1 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-    for j, mat2 in enumerate(young_subjects_deprived_normal_sleep_voxelwise_FC_list):
-        if j > i:
-            print('mat1',i,'mat2',j)
-            sub_dist_mat[:,i,j] = distance_matrix(mat1,mat2)
-            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
-
-np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix_perms_1000.npy'),sub_dist_mat)
 
 #%%
 sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
