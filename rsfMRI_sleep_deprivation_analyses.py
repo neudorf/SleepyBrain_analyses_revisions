@@ -1010,7 +1010,7 @@ if False:
     np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'),sub_dist_mat)
 
 #%% put back for github
-if False
+if False:
     sub_dist_mat = np.load(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_deprived_vs_normal_sleep_young_dist_matrix.npy'))
     group_contrast = [1.0 if i < len(young_subjects) else -1.0 for i in range(2*len(young_subjects))]
     analysis_name = 'young_deprived_vs_normal_sleep'
