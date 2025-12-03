@@ -1158,8 +1158,8 @@ mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 
 #%%
 analysis_name = 'young_deprived_vs_normal_sleep_perms_750'
-mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_perms_750.nii.gz')
-mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_perms_750.nii.gz')
+mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
+mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
 os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
 
 mdmr_img = nib.load(mdmr_nifti_file_2mm)
@@ -1293,8 +1293,8 @@ mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name)
 
 #%%
 analysis_name = 'young_deprived_vs_normal_sleep_perms_1000'
-mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_perms_1000.nii.gz')
-mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm_perms_1000.nii.gz')
+mdmr_nifti_file = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz')
+mdmr_nifti_file_2mm = MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p_2mm.nii.gz')
 os.system(f'flirt -in {mdmr_nifti_file} -ref {mdmr_nifti_file} -applyisoxfm 2.0 -nosearch -interp nearestneighbour -out {mdmr_nifti_file_2mm}')
 
 mdmr_img = nib.load(mdmr_nifti_file_2mm)
