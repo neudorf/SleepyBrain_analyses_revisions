@@ -22,7 +22,8 @@ import os
 from neuromaps import transforms
 from nilearn import plotting, datasets
 
-RSCRIPT = '/usr/bin/Rscript'
+#RSCRIPT = '/usr/bin/Rscript'
+RSCRIPT = '/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'
 
 ATLAS = '220'
 
