@@ -935,19 +935,20 @@ def mdmr_cluster_thresh(sub_dist_mat,group_contrast,analysis_name):
     nib.save(sig_p_vals_img, MDMR_DIR.joinpath(f'cluster_thresholded_voxelwise_{analysis_name}_mdmr_p.nii.gz'))
 
 #%% deprived - normal sleep young vs old intersubject distance matrix calculation
-voxels_n = young_old_subjects_deprived_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
-sub_dist_mat = np.zeros((voxels_n,len(subjects_young_old),len(subjects_young_old)))
-for i, s1 in enumerate(subjects_young_old):
-    s1_diff_sleep_FC = young_old_subjects_deprived_sleep_voxelwise_FC_dict[s1] - young_old_subjects_normal_sleep_voxelwise_FC_dict[s1]
-    for j, s2 in enumerate(subjects_young_old):
-        if j > i:
-            print('s1',i,s1,'s2',j,s2)
-            s2_diff_sleep_FC = young_old_subjects_deprived_sleep_voxelwise_FC_dict[s2] - young_old_subjects_normal_sleep_voxelwise_FC_dict[s2]
-            
-            sub_dist_mat[:,i,j] = distance_matrix(s1_diff_sleep_FC,s2_diff_sleep_FC)
-            sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
+if False: # put back for github
+    voxels_n = young_old_subjects_deprived_sleep_voxelwise_FC_dict[subjects_young_old[0]].shape[0]
+    sub_dist_mat = np.zeros((voxels_n,len(subjects_young_old),len(subjects_young_old)))
+    for i, s1 in enumerate(subjects_young_old):
+        s1_diff_sleep_FC = young_old_subjects_deprived_sleep_voxelwise_FC_dict[s1] - young_old_subjects_normal_sleep_voxelwise_FC_dict[s1]
+        for j, s2 in enumerate(subjects_young_old):
+            if j > i:
+                print('s1',i,s1,'s2',j,s2)
+                s2_diff_sleep_FC = young_old_subjects_deprived_sleep_voxelwise_FC_dict[s2] - young_old_subjects_normal_sleep_voxelwise_FC_dict[s2]
+                
+                sub_dist_mat[:,i,j] = distance_matrix(s1_diff_sleep_FC,s2_diff_sleep_FC)
+                sub_dist_mat[:,j,i] = sub_dist_mat[:,i,j]
 
-np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_diff_sleep_dist_matrix.npy'),sub_dist_mat)
+    np.save(GM_VOXELWISE_FC_DIR.joinpath('intersubject_voxelwise_FC_diff_sleep_dist_matrix.npy'),sub_dist_mat)
 
 #%% put back for github
 if False:
