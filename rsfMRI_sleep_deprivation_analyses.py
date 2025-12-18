@@ -35,6 +35,7 @@ BEHAV_FILE = BEHAV_DIR.joinpath('behav_good_subs.csv')
 SA_AXIS_FILE = Path('data/atlas/schaefer200x17_SAaxis.csv')
 
 ATLAS_FRIENDLY_NAMES_FILE = DATA_PROCESSING_DIR.joinpath('BrainNet_templates/TVBSchaeferTian220_MNI_node_friendly_names.node')
+ATLAS_NETWORK_LABELS_FILE = Path('data/atlas/ST220_Labels.csv')
 
 FC_DIR = DATA_PROCESSING_DIR.joinpath(f'FC/TVBSchaeferTian{ATLAS}')
 FC_DEPRIVED_SLEEP_DICT_FILE = FC_DIR.joinpath('FC_deprived_sleep_dict.pkl')
@@ -304,6 +305,7 @@ save_BNV_edge(component_neg,NBS_BNV_EDGE_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_
 save_BNV_edge(component_pos,NBS_BNV_EDGE_OUTPUT_FILE.parent.joinpath(f'{NBS_BNV_EDGE_OUTPUT_FILE.stem}_pos{NBS_BNV_EDGE_OUTPUT_FILE.suffix}'))
 
 component_bin = bin_pos_neg(component,thresh=t_thresh)
+component_degree = np.sum(component_bin,axis=0)
 component_total_n = np.sum(component_bin) / 2
 component_lh_n = np.sum(component_bin[:110,:110]) / 2
 component_rh_n = np.sum(component_bin[110:,110:]) / 2
@@ -322,6 +324,36 @@ print('positive (neg in figure) connections:',np.where(component_pos>t_thresh)[0
 print('negative (pos in figure) connections:',np.where(component_neg<-1*t_thresh)[0].shape[0] / 2)
 
 print('sig node degree thresh',np.mean(component_degree) + 2.5*np.std(component_degree))
+
+#%%
+#%% Yeo 17 network connection counts NBS
+network_labels = pd.read_csv(ATLAS_NETWORK_LABELS_FILE,sep=',',usecols=['region_num','region','network_num_17','Network_17'])
+#network_labels = network_labels.loc[network_labels.network_num_17 > 0]
+network_num_17 = np.array(network_labels.network_num_17,dtype=int)
+network_connections_within_prop_list = []
+network_connections_external_prop_list = []
+for n in range(1,18):
+    network_idx = np.where(network_num_17 == n)
+    not_network_idx = np.where(network_num_17 !=n)
+    network_regions_n = network_idx[0].shape[0]
+    network_possible_connections_within = int((network_regions_n * (network_regions_n - 1)) / 2)
+    network_possible_connections_external = int(network_regions_n * (regions_n - network_regions_n))
+    network_connections_within = component_bin[network_idx,:][0,:,network_idx][0,:,:]
+    network_connections_within_n = int(np.sum(network_connections_within) / 2)
+    network_connections_within_prop = network_connections_within_n / network_possible_connections_within
+    network_connections_within_prop_list.append(network_connections_within_prop)
+
+    network_connections_external = component_bin[network_idx,:][0,:,not_network_idx][0,:,:]
+    network_connections_external_n = int(np.sum(network_connections_external))
+    network_connections_external_prop = network_connections_external_n / network_possible_connections_external
+    network_connections_external_prop_list.append(network_connections_external_prop)
+
+network_connections_external_prop_mean = np.mean(network_connections_external_prop_list)
+network_connections_within_prop_mean = np.mean(network_connections_within_prop_list)
+print('Within-network proportion: ',network_connections_within_prop_mean)
+print('Out-of-network proportion: ',network_connections_external_prop_mean)
+
+stats.ttest_rel(network_connections_within_prop_list,network_connections_external_prop_list)
 
 #%% NBS t 2.5
 t_thresh = 2.5
@@ -476,6 +508,35 @@ print('PLS connections',bsr_total_n)
 print('PLS LH',bsr_lh_n,bsr_lh_n/bsr_total_n * 100,'%')
 print('PLS RH',bsr_rh_n,bsr_rh_n/bsr_total_n * 100,'%')
 print('PLS interhemi',bsr_xh_n,bsr_xh_n/bsr_total_n * 100,'%')
+
+#%% Yeo 17 network connection counts
+network_labels = pd.read_csv(ATLAS_NETWORK_LABELS_FILE,sep=',',usecols=['region_num','region','network_num_17','Network_17'])
+#network_labels = network_labels.loc[network_labels.network_num_17 > 0]
+network_num_17 = np.array(network_labels.network_num_17,dtype=int)
+network_connections_within_prop_list = []
+network_connections_external_prop_list = []
+for n in range(1,18):
+    network_idx = np.where(network_num_17 == n)
+    not_network_idx = np.where(network_num_17 !=n)
+    network_regions_n = network_idx[0].shape[0]
+    network_possible_connections_within = int((network_regions_n * (network_regions_n - 1)) / 2)
+    network_possible_connections_external = int(network_regions_n * (regions_n - network_regions_n))
+    network_connections_within = FC_bsr_bin[network_idx,:][0,:,network_idx][0,:,:]
+    network_connections_within_n = int(np.sum(network_connections_within) / 2)
+    network_connections_within_prop = network_connections_within_n / network_possible_connections_within
+    network_connections_within_prop_list.append(network_connections_within_prop)
+
+    network_connections_external = FC_bsr_bin[network_idx,:][0,:,not_network_idx][0,:,:]
+    network_connections_external_n = int(np.sum(network_connections_external))
+    network_connections_external_prop = network_connections_external_n / network_possible_connections_external
+    network_connections_external_prop_list.append(network_connections_external_prop)
+
+network_connections_external_prop_mean = np.mean(network_connections_external_prop_list)
+network_connections_within_prop_mean = np.mean(network_connections_within_prop_list)
+print('Within-network proportion: ',network_connections_within_prop_mean)
+print('Out-of-network proportion: ',network_connections_external_prop_mean)
+
+stats.ttest_rel(network_connections_within_prop_list,network_connections_external_prop_list)
 
 #%% mean sleep difference effects for connections identified by PLS sig BSRs
 #   this will aid interpretting PLS interaction
