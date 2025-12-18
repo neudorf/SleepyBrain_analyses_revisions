@@ -21,9 +21,10 @@ import scipy.stats as stats
 import os
 from neuromaps import transforms
 from nilearn import plotting, datasets
+from plotnine import ggplot, aes, geom_point, geom_line, geom_smooth, theme_classic
 
-#RSCRIPT = '/usr/bin/Rscript'
-RSCRIPT = '/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'
+RSCRIPT = '/usr/bin/Rscript'
+#RSCRIPT = '/cvmfs/soft.computecanada.ca/easybuild/software/2020/avx2/Core/r/4.3.1/bin/Rscript'
 
 ATLAS = '220'
 
@@ -84,6 +85,7 @@ PLS_FC_DEGREE_SEX_BSR_CORTEX_FIG_FILE = PLS_BSR_DIR.joinpath('mean_centred_PLS_l
 PLS_FC_DEGREE_SEX_BSR_SUBCORTEX_FIG_FILE = PLS_BSR_DIR.joinpath('mean_centred_PLS_lv1_bsr_2.0thresh_FC_degree_sex_subcortex.png')
 
 SA_AXIS_FIG_FILE = PLS_BSR_DIR.joinpath('SA_axis_schaefer200x17_ggseg.png')
+SA_DEGREE_PLOT_FILE = PLS_BSR_DIR.joinpath('SA_degree_plot.png')
 
 NBS_OUTPUT_DIR = Path('outputs/NBS')
 NBS_OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
@@ -606,12 +608,20 @@ sa_axis_data_padded = np.zeros_like(FC_degree_bsr_nothresh)
 sa_axis_data_padded[:100] = sa_axis_data[:100]
 sa_axis_data_padded[110:210] = sa_axis_data[100:]
 visualization.vis_cortex(sa_axis_data_padded,SA_AXIS_FIG_FILE,0.0,atlas_name='ST220',rscript=RSCRIPT)
-
 #%%
 FC_degree_bsr_cortex = np.zeros_like(sa_axis_data)
 FC_degree_bsr_cortex[:100] = FC_degree_bsr_nothresh[:100]
 FC_degree_bsr_cortex[100:] = FC_degree_bsr_nothresh[110:210]
 print(stats.pearsonr(FC_degree_bsr_cortex,sa_axis_data))
+
+df = pd.DataFrame({'SA': sa_axis_data, 'FC Degree BSR': FC_degree_bsr_cortex})
+SA_degree_plot = (
+    ggplot(df, aes('SA','FC Degree BSR'))
+    + geom_point(colour='#2aa198')
+    + geom_smooth(method='lm', se=False)
+    +theme_classic()
+)
+SA_degree_plot.save(SA_DEGREE_PLOT_FILE)
 
 #%%
 with open(FC_DEGREE_DEPRIVED_SLEEP_DICT_FILE,'rb') as f:
