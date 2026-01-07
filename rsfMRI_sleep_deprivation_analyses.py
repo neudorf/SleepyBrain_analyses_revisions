@@ -675,9 +675,9 @@ FC_degree_bsr_cortex[:100] = FC_degree_bsr_nothresh[:100]
 FC_degree_bsr_cortex[100:] = FC_degree_bsr_nothresh[110:210]
 print(stats.pearsonr(FC_degree_bsr_cortex,sa_axis_data))
 
-df = pd.DataFrame({'SA': sa_axis_data, 'FC Degree BSR': FC_degree_bsr_cortex})
+df = pd.DataFrame({'S-A Axis': sa_axis_data, 'FC Degree BSR': FC_degree_bsr_cortex})
 SA_degree_plot = (
-    ggplot(df, aes('SA','FC Degree BSR'))
+    ggplot(df, aes('S-A Axis','FC Degree BSR'))
     + geom_point(colour='#2aa198')
     + geom_smooth(method='lm', se=False)
     +theme_classic()
