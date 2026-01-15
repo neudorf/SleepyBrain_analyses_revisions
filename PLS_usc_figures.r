@@ -308,8 +308,8 @@ FC_usc_plot_file = '/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_dep
 DT_mean_plot_file = '/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/outputs/PLS/mean_centred_PLS/leida_DT_global_ggplot.png'
 FC_usc_df = read.csv(FC_usc_file,sep=',')
 FC_usc_df$sub = as.factor(FC_usc_df$sub)
-FC_usc_df$age = as.factor(FC_usc_df$age)
-FC_usc_df$sleep = as.factor(FC_usc_df$sleep)
+FC_usc_df$age = factor(FC_usc_df$age, levels = c('young','old'))
+FC_usc_df$sleep = factor(FC_usc_df$sleep, levels = c('normal','deprived'))
 FC_usc_df$cond = paste(as.character(FC_usc_df$age) , as.character(FC_usc_df$sleep))
 FC_usc_df[FC_usc_df$cond == 'young deprived','cond'] = 'Young (Restricted)'
 FC_usc_df[FC_usc_df$cond == 'young normal','cond'] = 'Young (Normal)'
@@ -352,6 +352,10 @@ FC_usc_df_ci$DT_global = NULL
 
 FC_usc_df_means = merge(FC_usc_df_means,FC_usc_df_ci, by=c('cond','age','sleep'))
 
+lm2 = lmer(DT_global ~ sleep*age + (1 |sub),data=FC_usc_df)
+summary(lm2)
+plot(effect("sleep:age",lm2))
+
 ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) + 
   geom_col(aes(fill=cond), linetype = 'solid', colour = 'black', linewidth = 0.25) +
   scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
@@ -364,21 +368,25 @@ ggplot(FC_usc_df_means,aes(x=cond,orig_usc)) +
   theme(text = element_text(size=20))
 ggsave(FC_usc_plot_file)
 
+int_effect = effect("sleep*age", lm2)
+FC_usc_df_means = FC_usc_df_means[order(FC_usc_df_means$cond),]
+FC_usc_df_means$lme_lower = int_effect$lower
+FC_usc_df_means$lme_upper = int_effect$upper
+FC_usc_df_means$lme_fit = int_effect$fit
+
 # Global FO mean plot
 ggplot(FC_usc_df_means,aes(x=cond,DT_global)) + 
   geom_col(aes(fill=cond), linetype = 'solid', colour = 'black', linewidth = 0.25) +
-  geom_errorbar(aes(ymin=DT_global_ll,ymax=DT_global_ul),width=.1) +
+  geom_errorbar(aes(ymin=lme_lower,ymax=lme_upper),width=.1) +
+  geom_point(data=merged_df, aes(group=cond, y = DT_global, shape=sex),  colour='black',alpha=.25) +
+  geom_line(data=merged_df, aes(y = DT_global, group=sub,linetype=sex),alpha=.5) +
   scale_fill_manual(values=c('#d33682','#d33682','#2aa198','#2aa198')) +
-  ylab('Global Coherence State FO') + xlab('Group (Sleep Condition)') + guides(fill = 'none') +
+  ylab('Global Coherence State FO') + xlab('Group (Sleep Condition)') + guides(fill = 'none') + labs(linetype='Sex',shape='Sex') +
   theme_classic() +
   theme(text = element_text(size=20), panel.border = element_blank(), panel.grid = element_blank())+
-  scale_y_continuous(expand=c(0,0)) # removes gap between 0 and y axis line
+  scale_y_continuous(limits=c(0,20),expand=c(0,0)) # removes gap between 0 and y axis line
 
 ggsave(DT_mean_plot_file)
-
-lm2 = lmer(DT_global ~ sleep*age + (1 |sub),data=FC_usc_df)
-summary(lm2)
-plot(effect("sleep:age",lm2))
 
 cols = c('#444444','#2AA198','#D33682')
 pdf("/media/WDBlue/mcintosh/projects/SleepyBrain/rsfMRI_sleep_deprivation_FAIR_revisions/SleepyBrain_analyses_revisions/outputs/leida-matlab/DT_global_means.pdf", height = 6, width = 6) 
